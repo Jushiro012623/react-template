@@ -42,11 +42,23 @@ const variants = {
     type: "p",
     class: "text-sm",
   },
+  small:{
+    type: "p",
+    class: "text-xs"
+  },
+  small2:{
+    type: "p",
+    class: "text-xs font-medium"
+  },
+  small3:{
+    type: "p",
+    class: "text-xs font-semibold"
+  },
+  
   info: {
     type: "p",
     class: "text-[11px]",
   },
-  p: "p",
   label: {
     type: "label",
     class: "text-xs",
