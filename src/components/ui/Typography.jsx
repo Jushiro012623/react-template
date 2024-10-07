@@ -73,6 +73,7 @@ export const colors = {
   info: "text-teal-500", // Teal for informational text
   light: "text-gray-400", // Light gray for less prominent text
   dark: "text-gray-800", // Dark gray for headings or emphasis
+  gray: "text-gray-500", // Dark gray for headings or emphasis
 };
 
 export default function Typography({

@@ -5,7 +5,8 @@
 
 body {
   @apply bg-white;
-  font-family: "Inter", system-ui;
+  
+  font-family: "Inter", sans-serif;
 }
 .btn {
   /* We need this to position
