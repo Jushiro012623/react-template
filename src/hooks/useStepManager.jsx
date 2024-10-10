@@ -1,5 +1,5 @@
 import React from "react";
-export default function useStepper(maxStep) {
+export default function useStepManager(maxStep) {
   const initialState = 1
   const reducer = (state, action) => {
     switch (action.type) {
