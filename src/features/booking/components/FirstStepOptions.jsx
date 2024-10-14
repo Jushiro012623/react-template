@@ -30,7 +30,7 @@ const FirstStepOptions = ({props}) => {
                     { data ? (
                         data.map((vessel) => (
                             <div 
-                            className={`relative grow flex-col flex items-center justify-center h-40 w-44 cursor-pointer rounded-md border  transition-colors duration-500 ${isActive(value.vessel, vessel.id)}`}
+                            className={`relative grow flex-col flex items-center justify-center h-40 w-44 cursor-pointer rounded-md border  transition-colors duration-300 ${isActive(value.vessel, vessel.id)}`}
                                 onClick={()=>{setValue(prevState => ({ ...prevState, vessel: vessel.id} ))}}
                                 key={vessel.id}
                             >

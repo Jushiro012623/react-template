@@ -33,7 +33,7 @@ export default function Button({ onClick, className, children, variant = 'primar
     <button
       ref={buttonRef}
       className={clsx(
-        'relative overflow-hidden border rounded-md focus:outline-none btn min-w-20',
+        'relative overflow-hidden border outline-none rounded-md focus:outline-none btn min-w-20',
         variants[variant],
         sizes[size],
         className
