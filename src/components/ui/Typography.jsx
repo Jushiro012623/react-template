@@ -70,7 +70,8 @@ export const colors = {
   secondary: "text-green-500", // Secondary color for accents
   danger: "text-red-500", // Red for error messages
   warning: "text-yellow-500", // Yellow for warnings
-  info: "text-teal-500", // Teal for informational text
+  highlight: "text-teal-500", // Teal for informational text
+  info: "text-sky-500", // Teal for informational text
   light: "text-gray-400", // Light gray for less prominent text
   dark: "text-gray-800", // Dark gray for headings or emphasis
   gray: "text-gray-500", // Dark gray for headings or emphasis

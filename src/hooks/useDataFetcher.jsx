@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 const baseUrl = `http://127.0.0.1:8080/api/`
-export default function useDataFetcher(endpoint) {
+const useDataFetcher = (endpoint) => {
     const [data, setData] = React.useState(null);
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(null);
@@ -27,3 +27,4 @@ export default function useDataFetcher(endpoint) {
     }, [endpoint])
     return { data, loading, error }
 }
+export default useDataFetcher

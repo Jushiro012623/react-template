@@ -10,7 +10,7 @@ const TripBooking = Loadable(React.lazy(() => import('../pages/TripBooking')));
 const MainRouter = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout />}>
-      <Route path='user' element={<TripBooking />} />
+      <Route path='user' element={<TripBooking />} errorElement={<Loadable />} />
       {/* <Route path='user' element={<UserList />} />
       <Route path='user/add' element={<UserAdd />} />
       <Route path='user/:id' element={<UserEdit />} /> */}

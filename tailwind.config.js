@@ -22,6 +22,10 @@ export default {
         rotateHide:{
           "0%": { transform: "rotate(0)", opacity: "1" },
           "100%": { transform: "rotate(-90deg)", opacity: "0" },
+        },
+        modalDrop:{
+          "0%": {  top:"0", opacity: "0" },
+          "100%": { transform: "translate(-50%, -50%)", top:"50%", left:"50%", opacity: "1" },
         }
       },
 
@@ -31,6 +35,7 @@ export default {
         rotateShow: "rotateShow .3s ease forwards",
         appear: "appear .2s linear forwards",
         longerAppear: "show .2s linear .3s forwards",
+        modalDrop: "modalDrop .3s linear forwards",
       },
       transitionProperty: {
         height: "height",
