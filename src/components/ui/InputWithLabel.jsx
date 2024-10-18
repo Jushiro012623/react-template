@@ -1,5 +1,7 @@
 import React from 'react'
 import { variants } from './BasicInput';
+import clsx from 'clsx';
+import Typography from './Typography';
 export default function InputWithLabel({
     variant = "default",
     name,

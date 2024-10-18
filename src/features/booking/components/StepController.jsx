@@ -20,7 +20,7 @@ export default function StepController({ props }) {
                 onClick={() => {
                     if (state.step === maxStep) {
                         dispatch({ type: "COMPLETE" });
-                    } else {
+                    }else {
                         dispatch({ type: "NEXT" });
                     }
                 }}  

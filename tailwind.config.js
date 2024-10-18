@@ -35,7 +35,7 @@ export default {
         rotateShow: "rotateShow .3s ease forwards",
         appear: "appear .2s linear forwards",
         longerAppear: "show .2s linear .3s forwards",
-        modalDrop: "modalDrop .3s linear forwards",
+        modalDrop: "modalDrop .2s linear forwards",
       },
       transitionProperty: {
         height: "height",

@@ -1,6 +1,8 @@
 import React from 'react'
 import { variants } from './BasicInput';
-export default function FloatingLabelInput({ variant = "default", name, label, className, parentClass, message, ...props
+import Typography from './Typography';
+import clsx from 'clsx';
+export default function FloatingLabelInput({ variant = "default", name, label, className, parentClass, message, onChange,...props
 }) {
   const variantClass = variants[variant] || variants.default;
   const [isFocused, setIsFocused] = React.useState(false);
@@ -29,7 +31,7 @@ export default function FloatingLabelInput({ variant = "default", name, label, c
             className={clsx("rounded-md w-full h-11 text-xs outline-none px-4 z-10", variantClass, className )}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            onChange={(e) => setIsValid(!!e.target.value)}
+            onChange={(e) => {setIsValid(!!e.target.value); onChange}}
             {...props}
         />
         <Typography variant="info" color={variant} className={`absolute bottom-0 translate-y-5 mt-1`}>
