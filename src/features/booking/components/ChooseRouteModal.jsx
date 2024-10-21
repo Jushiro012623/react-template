@@ -47,7 +47,6 @@ export default function ChooseRouteModal({props}) {
                             <Button type="button" className={`w-full`} onClick={() => { setValue(prevState => ({ ...prevState, route: selectedRoute })); setIsOpen(false); }} disabled={selectedRoute.id === null ? true : false}>Confirm</Button>
                             <Button variant="border" type="button" className={`w-full mt-2`} onClick={handleClose}>Cancel</Button>
                         </div>
-                            
                     </div>
                 </div>
             </div>

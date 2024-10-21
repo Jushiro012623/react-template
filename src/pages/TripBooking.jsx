@@ -5,6 +5,7 @@ import useStepManager from "@/hooks/useStepManager";
 import { IoBoat } from "react-icons/io5";
 import useDataFetcher from "@/hooks/useDataFetcher";
 import SecondStepOptions from "@/features/booking/components/SecondStepOptions";
+import ThirdStep from "@/features/booking/components/ThirdStep";
 
 export const MultiStepper = React.createContext()
 
@@ -49,7 +50,7 @@ export default function TripBooking() {
                     return <SecondStepOptions />
                     case 3:
                     isDisable = value.vessel && value.route ? false : true 
-                    return <p>Confirm</p>;
+                    return <ThirdStep />
                     default:
                     isDisable = true;
                     return <p>Default</p>;
