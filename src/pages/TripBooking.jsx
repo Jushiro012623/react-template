@@ -6,6 +6,7 @@ import { IoBoat } from "react-icons/io5";
 import useDataFetcher from "@/hooks/useDataFetcher";
 import SecondStepOptions from "@/features/booking/components/SecondStepOptions";
 import ThirdStep from "@/features/booking/components/ThirdStep";
+import axios from "axios";
 
 export const MultiStepper = React.createContext()
 
@@ -25,12 +26,24 @@ export default function TripBooking() {
     option: null,
     // discount: null
   })
-  console.log(value);
-  
+
   const handleOnSubmit = (event) => {
-    event.preventDefault();
-    console.log("Submitted");
     console.log(value);
+    
+    event.preventDefault();
+    axios.post('http://127.0.0.1:8080/api/ticket',{
+      route_id: value.route.id,
+      type_id:value.option,
+      vessel_id: value.vessel.id,
+      weight:value.details.rolling_weight || value.details.drop_weight || null,
+      discount:value.details.discount || null,
+      vehicle_type:value.details.vehicle_type || null,
+      plate_number:value.details.plate_number || null,
+      cargo_description:value.details.cargo_description || null,
+      item_name:value.details.item_name || null,
+      quantity:value.details.quantity || null,
+      payment_method_id:1
+    })
   };
   let isDisable = true;
   return (

@@ -100,7 +100,7 @@ const Passenger = ({ props }) => {
           <option className="text-xs" value="pwd_senior">
             PWD/Senior
           </option>
-          <option className="text-xs" value="hald_fare">
+          <option className="text-xs" value="half_fare">
             Half Fare
           </option>
           <option className="text-xs" value="minor">
