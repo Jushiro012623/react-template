@@ -52,7 +52,7 @@ export default function TripBooking() {
         <div className="flex border p-10 rounded-3xl bg-bg max-w-[1280px] mx-auto">
           <div className="mx-auto gap-[96px]">
             <StepTracker props={{ state, stepDetails, maxStep }} />
-            <form onSubmit={handleOnSubmit} className='step-body mx-auto mt-24 px-10 rounded-xl flex flex-col border pt-10 bg-white select-none'>
+            <form onSubmit={handleOnSubmit} className='step-body mx-auto mt-24 px-10 rounded-xl flex flex-col border pt-10 bg-white select-none max-w-[652.11px]'>
                 {(() => {
                 switch (state.step) {
                     case 1:

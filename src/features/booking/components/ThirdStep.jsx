@@ -2,7 +2,7 @@ import Typography from '@/components/ui/Typography'
 import useDataFetcher from '@/hooks/useDataFetcher'
 import { MultiStepper } from '@/pages/TripBooking'
 import React from 'react'
-
+import { IoIosArrowRoundForward } from "react-icons/io";
 export default function ThirdStep() {
     const {setValue, value} = React.useContext(MultiStepper)
     const params = {
@@ -21,20 +21,34 @@ export default function ThirdStep() {
     <React.Fragment>
     {loading ? 
         <Typography>Loading</Typography> : 
-        <React.Fragment>
-            <Typography>{data.base_fare}</Typography>
-            <Typography>{data.discount || ''}</Typography>
-            <Typography>{data.additional_fee || ''}</Typography>
-            <Typography>{data.discounted_fare}</Typography>
-            <Typography>{data.total_amount}</Typography>
-            <Typography>{value.vessel.name}</Typography>
-            <Typography>{value.route.destination}</Typography>
-            <Typography>{value.route.origin}</Typography>
-            <Typography>{value.route.type}</Typography>
-            <Typography>Name</Typography>
-            <Typography>Email</Typography>
-            <Typography>{value.option === 1 ? 'Passenger' : (value.option === 2 ? 'Rolling Cargo' : 'Drop Cargo')}</Typography>
-        </React.Fragment>
+        <div>
+          <Typography variant="h3">Ticket Summary</Typography>
+          <Typography variant="small" className={`mt-2 mb-7`}>
+            Please take a moment to review and confirm your ticket details.
+          </Typography>
+          <div className='mt-10 grid grid-cols-4 gap-4'>
+          {[
+            { customStyle: 'col-span-2', label: 'Origin', value: value.route.origin },
+            { customStyle: 'col-span-2', label: 'Destination', value: value.route.destination },
+            { customStyle: 'col-span-3', label: 'Vessel Name', value:value.vessel.name },
+            { customStyle: 'col-span-1', label: 'Route Type', value: value.route.type },
+            { customStyle: 'col-span-2', label: 'Ride Type', value: value.option === 1 ? 'Passenger' : (value.option === 2 ? 'Rolling Cargo' : 'Drop Cargo') },
+            { customStyle: 'col-span-2', label: 'Email', value: 'Email' },
+            { customStyle: 'col-span-4', label: 'Name', value: 'Name' },
+            { customStyle: 'col-span-3', label: 'Discount Type', value: data.discount || 'N/A' },
+            { customStyle: 'col-span-1', label: 'Discounted Fare', value: data.discounted_fare },
+            { customStyle: 'col-span-2', label: 'Base Fare', value: data.base_fare },
+            { customStyle: 'col-span-2', label: 'Additional Fee', value: data.additional_fee || 'N/A' },
+            { customStyle: 'col-span-4', label: 'Total Amount', value:data.total_amount },
+          ].map((item, index) => (
+            <div key={index} className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 ${item.customStyle}`}>
+              <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">{item.label}</Typography>
+              <Typography variant='small2' className={`text-gray-600 capitalize `}>{item.value}</Typography>
+            </div>
+          ))}
+        </div>
+
+        </div>
     }
     </React.Fragment>
   )

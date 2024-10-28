@@ -1,3 +1,7 @@
+/**
+ * @param {string} state
+ * @param {string} value
+**/
 export const isActive = (state, value) => {
     if (value === state){
         return 'border-indigo-400';
