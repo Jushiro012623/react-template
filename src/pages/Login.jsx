@@ -5,8 +5,10 @@ import {CombinationLogo} from '@/components/ui/Logo'
 import React from 'react'
 import { LuUser2, LuLock  } from "react-icons/lu";
 import { submitData } from '@/utils/submitData'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 export default function Login() {
 
+  useDocumentTitle('Login');
   const [creds, setCreds] = React.useState({
     email: '',
     password: '',

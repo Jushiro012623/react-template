@@ -7,9 +7,13 @@ import useDataFetcher from "@/hooks/useDataFetcher";
 import SecondStepOptions from "@/features/booking/components/SecondStepOptions";
 import ThirdStep from "@/features/booking/components/ThirdStep";
 import useSubmitData from "@/hooks/useSubmitData";
+import useDocumentTitle from '@/hooks/useDocumentTitle'
+
 export const MultiStepper = React.createContext()
 
 export default function TripBooking() {
+  useDocumentTitle('Ticket Booking');
+  
   const stepDetails = [
     { id: 1, icon: <IoBoat />, details: "Route Details" },
     { id: 2, icon: <IoBoat />, details: "Booking Details" },
