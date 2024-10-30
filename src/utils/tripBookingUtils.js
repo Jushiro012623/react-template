@@ -2,9 +2,9 @@
  * @param {string} state
  * @param {string} value
 **/
-export const isActive = (state, value) => {
+export const isActive = (state = '', value = '') => {
     if (value === state){
-        return 'border-indigo-400';
+        return 'border-indigo-400'; 
     }else{
         return 'border-gray-200';
     }

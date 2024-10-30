@@ -5,22 +5,8 @@ import React from 'react'
 import { IoIosArrowRoundForward } from "react-icons/io";
 export default function ThirdStep() {
     const {setValue, value} = React.useContext(MultiStepper)
-    const params = {
-        route_id: value.route.id,
-        type_id:value.option,
-        weight:value.details.rolling_weight || value.details.drop_weight || null,
-        discount:value.details.discount || null,
-    }
-    const { data, loading, error } = useDataFetcher('ticket/review', params)
-    // React.useEffect(() =>{
-    //     console.log(data);  
-    //     console.log(value);
-        
-    // },[])
   return (
     <React.Fragment>
-    {loading ? 
-        <Typography>Loading</Typography> : 
         <div>
           <Typography variant="h3">Ticket Summary</Typography>
           <Typography variant="small" className={`mt-2 mb-7`}>
@@ -28,18 +14,18 @@ export default function ThirdStep() {
           </Typography>
           <div className='mt-10 grid grid-cols-4 gap-4'>
           {[
-            { customStyle: 'col-span-2', label: 'Origin', value: value.route.origin },
-            { customStyle: 'col-span-2', label: 'Destination', value: value.route.destination },
-            { customStyle: 'col-span-3', label: 'Vessel Name', value:value.vessel.name },
-            { customStyle: 'col-span-1', label: 'Route Type', value: value.route.type },
-            { customStyle: 'col-span-2', label: 'Ride Type', value: value.option === 1 ? 'Passenger' : (value.option === 2 ? 'Rolling Cargo' : 'Drop Cargo') },
+            { customStyle: 'col-span-2', label: 'Origin', value: value.details.route.origin },
+            { customStyle: 'col-span-2', label: 'Destination', value: value.details.route.destination },
+            { customStyle: 'col-span-3', label: 'Vessel Name', value:value.details.vessel_name },
+            { customStyle: 'col-span-1', label: 'Route Type', value: value.details.route.type },
+            { customStyle: 'col-span-2', label: 'Ride Type', value: value.data.type_id === 1 ? 'Passenger' : (value.option === 2 ? 'Rolling Cargo' : 'Drop Cargo') },
             { customStyle: 'col-span-2', label: 'Email', value: 'Email' },
             { customStyle: 'col-span-4', label: 'Name', value: 'Name' },
-            { customStyle: 'col-span-3', label: 'Discount Type', value: data.discount || 'N/A' },
-            { customStyle: 'col-span-1', label: 'Discounted Fare', value: data.discounted_fare },
-            { customStyle: 'col-span-2', label: 'Base Fare', value: data.base_fare },
-            { customStyle: 'col-span-2', label: 'Additional Fee', value: data.additional_fee || 'N/A' },
-            { customStyle: 'col-span-4', label: 'Total Amount', value:data.total_amount },
+            // { customStyle: 'col-span-3', label: 'Discount Type', value: data.discount || 'N/A' },
+            // { customStyle: 'col-span-1', label: 'Discounted Fare', value: data.discounted_fare },
+            // { customStyle: 'col-span-2', label: 'Base Fare', value: data.base_fare },
+            // { customStyle: 'col-span-2', label: 'Additional Fee', value: data.additional_fee || 'N/A' },
+            // { customStyle: 'col-span-4', label: 'Total Amount', value:data.total_amount },
           ].map((item, index) => (
             <div key={index} className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 ${item.customStyle}`}>
               <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">{item.label}</Typography>
@@ -49,7 +35,6 @@ export default function ThirdStep() {
         </div>
 
         </div>
-    }
     </React.Fragment>
   )
 }

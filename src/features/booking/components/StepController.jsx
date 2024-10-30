@@ -16,7 +16,7 @@ export default function StepController({ props }) {
             </Button>
             <Button 
                 disabled={isDisable}
-                className={`flex items-center gap-1 justify-center `} type={state.status === 'complete' ? 'submit' : 'button'}
+                className={`flex items-center gap-1 justify-center`} type={state.status === 'complete' ? 'submit' : 'button'}
                 onClick={() => {
                     if (state.step === maxStep) {
                         dispatch({ type: "COMPLETE" });

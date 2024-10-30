@@ -1,17 +1,36 @@
 import Button from "@/components/ui/Button";
-import FloatingLabelInput from "@/components/ui/FloatingLabelInput ";
 import Typography from "@/components/ui/Typography";
 import { MultiStepper } from "@/pages/TripBooking";
-import React, { useEffect } from "react";
+import React from "react";
 import { RxCross2 } from "react-icons/rx";
 import { IoIosArrowDown } from "react-icons/io";
 import { isActive } from "@/utils/tripBookingUtils";
 import InputWithLabel from "@/components/ui/InputWithLabel";
 export default function FillupInfo({ props }) {
   const { isOpen, option, setIsOpen } = props;
-  const { setValue, value } = React.useContext(MultiStepper);
+  const { setValue, value, dispatch, setIsDisable } =
+    React.useContext(MultiStepper);
   const [initialValue, setInitialValue] = React.useState({});
 
+  const isFormValid = () => {
+    if (option === 1) {
+      return initialValue.additional !== undefined;
+    } else if (option === 2) {
+      return (
+        initialValue.vehicle_type &&
+        initialValue.plate_number &&
+        initialValue.rolling_weight
+      );
+    } else if (option === 3) {
+      return (
+        initialValue.item_name &&
+        initialValue.description &&
+        initialValue.quantity &&
+        initialValue.drop_weight
+      );
+    }
+    return false;
+  };
   return (
     <React.Fragment>
       <div
@@ -23,31 +42,42 @@ export default function FillupInfo({ props }) {
             <button
               type="button"
               className={`absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full`}
-              onClick={() => setIsOpen(false)}>
+              onClick={() => {
+                setIsOpen(false);
+              }}>
               <RxCross2 size={20} />
             </button>
             {(() => {
               switch (option) {
                 case 1:
-                  return <Passenger props={{ initialValue, setInitialValue }} />
+                  return (
+                    <Passenger props={{ initialValue, setInitialValue, value }} />
+                  );
                 case 2:
-                  return <RollingCargo props={{ initialValue, setInitialValue }} />
+                  return (
+                    <RollingCargo props={{ initialValue, setInitialValue }} />
+                  );
                 case 3:
-                  return <DropCargo props={{ initialValue, setInitialValue }} />
-                default: <Typography variant="h2">Invalid Option</Typography>
+                  return (
+                    <DropCargo props={{ initialValue, setInitialValue }} />
+                  );
+                default:
+                  return <Typography variant="h2">Invalid Option</Typography>;
               }
             })()}
-
             <div className="mt-5 border-t-2 border-dotted pt-5">
               <Button
                 type="button"
                 className={`w-full`}
+                disabled={!isFormValid()}
                 onClick={() => {
+                  setIsDisable(!isFormValid());
                   setValue((prevState) => ({
                     ...prevState,
-                    details: initialValue,
+                    data: { ...prevState.data, ...initialValue }, //additional:1,
                   }));
                   setIsOpen(false);
+                  dispatch({ type: "NEXT" });
                 }}>
                 Confirm
               </Button>
@@ -68,10 +98,9 @@ export default function FillupInfo({ props }) {
   );
 }
 const Passenger = ({ props }) => {
-  const { initialValue, setInitialValue } = props;
-  // const [discount, setDiscount] = useState('regular');
+  const { initialValue, setInitialValue,value } = props;
+  const radioValue = ['true','false']
   const handleChange = (event) => {
-    // setValue(prevState => ({ ...prevState, discount: event.target.value }) );
     setInitialValue((prevState) => ({
       ...prevState,
       discount: event.target.value,
@@ -87,14 +116,13 @@ const Passenger = ({ props }) => {
         <select
           name="discount"
           id="discount"
-          className="text-xs outline-none border w-full h-11 rounded-md px-4"
-          value={initialValue.discount}
+          className="capitalize text-xs outline-none border w-full h-11 rounded-md px-4"
           onChange={handleChange}>
-          {/* <option value="0" disabled> </option> */}
-          <option className="text-xs" value="regular">
+          <option className="text-xs capitalize pointer-events-none" disabled>Discount</option>
+          <option className={`text-xs ${ value.data?.discount === 'regular' ? 'bg-red-300' : null}`} value="regular">
             Regular
           </option>
-          <option className="text-xs" value="student">
+          <option className={`text-xs ${value.data?.discount === 'student' ? 'bg-red-300' : null }`} value="student">
             Student
           </option>
           <option className="text-xs" value="pwd_senior">
@@ -108,52 +136,47 @@ const Passenger = ({ props }) => {
           </option>
         </select>
         <IoIosArrowDown className="absolute right-3 top-1/2 pointer-events-none text-gray-600" />
-        {/* <Typography variant="small" for="discount" className="absolute top-0 left-4 bg-white -translate-y-1/2 px-1">Select Discount</Typography> */}
       </div>
       <Typography variant="small" className={`translate-y-1/2 mt-4 pl-1`}>
         Add Ons
       </Typography>
       <div className="flex gap-2 w-full">
-        <label
-          className={`grow min-w-[48%] border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300 ${isActive(
-            initialValue.additional,
-            1
-          )}`}>
-          <input
-            type="radio"
-            name="route"
-            value="1"
-            className="hidden"
-            onChange={() =>
-              setInitialValue((prevState) => ({ ...prevState, additional: 1 }))
-            }
-            // onChange={() => setValue(prevState => ({ ...prevState, additional:1 }) )}
-            checked={initialValue.additional === 1}
-          />
+      <label
+        className={`grow min-w-[48%] border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300  ${ (initialValue.additional || value.data?.additional) === radioValue[0] ? 'border-indigo-400' : 'border-gray-200'  }`}>
+        <input
+          type="radio"
+          name="route"
+          value={radioValue[0]}
+          className="hidden"
+          onChange={() =>{
+            // console.log((initialValue.additional || value.data?.additional) == 1, initialValue.additional || value.data?.additional, 0);
+            setInitialValue((prevState) => ({ ...prevState, additional: radioValue[0] }))}
+          }
+          checked={initialValue.additional === radioValue[0]}
+        />
           <Typography variant="small" className={`capitalize`}>
             Airconditioned
           </Typography>
-        </label>
-        <label
-          className={`grow min-w-[48%] border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300 ${isActive(
-            initialValue.additional,
-            0
-          )}`}>
-          <input
-            type="radio"
-            name="route"
-            value="0"
-            className="hidden"
-            onChange={() =>
-              setInitialValue((prevState) => ({ ...prevState, additional: 0 }))
-            }
-            // onChange={() => setValue(prevState => ({ ...prevState, additional:0 }) )}
-            checked={initialValue.additional === 0}
-          />
+      </label>
+      <label
+        className={`grow min-w-[48%] border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300  ${ (initialValue.additional || value.data?.additional) === radioValue[1] ? 'border-indigo-400' : 'border-gray-200'  }`}>
+        <input
+          type="radio"
+          name="route"
+          value={radioValue[1]}
+          className="hidden"
+          onChange={() =>{
+            // console.log((initialValue.additional || value.data?.additional) == 1, initialValue.additional || value.data?.additional, 0);
+            setInitialValue((prevState) => ({ ...prevState, additional: radioValue[1] }))}
+          }
+          checked={initialValue.additional === radioValue[1]}
+        />
           <Typography variant="small" className={`capitalize`}>
             Basic
           </Typography>
-        </label>
+      </label>
+      
+
       </div>
     </React.Fragment>
   );
@@ -168,7 +191,7 @@ const DropCargo = ({ props }) => {
           className={`w-full`}
           type="text"
           label="Item Name"
-          value={initialValue.item_name || ''}
+          value={initialValue.item_name || ""}
           onChange={(e) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -180,7 +203,7 @@ const DropCargo = ({ props }) => {
           className={`w-full`}
           type="text"
           label="Cargo Description"
-          value={initialValue.description || ''}
+          value={initialValue.description || ""}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -192,7 +215,7 @@ const DropCargo = ({ props }) => {
           className={`w-full`}
           type="number"
           label="Quantity"
-          value={initialValue.quantity || ''}
+          value={initialValue.quantity || ""}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -204,7 +227,7 @@ const DropCargo = ({ props }) => {
           className={`w-full`}
           type="number"
           label="Weight/KG"
-          value={initialValue.drop_weight || ''}
+          value={initialValue.drop_weight || ""}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -216,7 +239,7 @@ const DropCargo = ({ props }) => {
     </React.Fragment>
   );
 };
-const RollingCargo = ({ props }) =>{
+const RollingCargo = ({ props }) => {
   const { initialValue, setInitialValue } = props;
   return (
     <React.Fragment>
@@ -226,7 +249,7 @@ const RollingCargo = ({ props }) =>{
           className={`w-full`}
           type="text"
           label="Vehicle Type"
-          value={initialValue.vehicle_type || ''}
+          value={initialValue.vehicle_type || ""}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -238,7 +261,7 @@ const RollingCargo = ({ props }) =>{
           className={`w-full`}
           type="text"
           label="Plate Number"
-          value={initialValue.plate_number || ''}
+          value={initialValue.plate_number || ""}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -250,7 +273,7 @@ const RollingCargo = ({ props }) =>{
           className={`w-full`}
           type="number"
           label="Weight/KG"
-          value={initialValue.rolling_weight || ''}
+          value={initialValue.rolling_weight || ""}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -261,4 +284,4 @@ const RollingCargo = ({ props }) =>{
       </div>
     </React.Fragment>
   );
-}
+};

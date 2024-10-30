@@ -12,6 +12,7 @@ const variants = {
 
 const sizes = {
   small: 'py-[10px] px-3 text-xs',
+  small2: 'py-3 px-4 text-xs',
   medium: 'py-3 px-4 text-sm',
   large: 'py-4 px-5 text-lg',
 };

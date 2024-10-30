@@ -9,13 +9,14 @@ export default function Vessels({ props }) {
     <GiInterceptorShip size={40} />,
     <GiCargoShip size={40} />,
   ];
+  
   return (
     <div className="flex gap-5">
       {data ? (
         data.map((vessel) => (
           <label
             className={`relative grow flex-col flex items-center justify-center h-40 w-44 cursor-pointer rounded-md border transition-colors duration-300 ${isActive(
-                value.vessel ? value.vessel.id : null,
+                value.data?.vessel_id || null,
                 vessel.id
             )}`}
             key={vessel.id}>
@@ -27,11 +28,12 @@ export default function Vessels({ props }) {
                 onChange={() => {
                     setValue((prevState) => ({
                     ...prevState,
-                    vessel: { id: vessel.id, name: vessel.attributes.name },
+                    details: { ...prevState.details, vessel_name: vessel.attributes.name},
+                    data:{ ...prevState.data, vessel_id: vessel.id }
                     }));
-                    setIsOpen(value.route ? false : true);
+                    setIsOpen(value.details && value.details.route_name ? false : true);
                 }}
-                checked={value.vessel?.id === vessel.id}
+                checked={value.data?.vessel_id === vessel.id}
             />
 
             <Typography>{icons[vessel.id - 1]}</Typography>

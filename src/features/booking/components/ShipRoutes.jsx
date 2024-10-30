@@ -3,7 +3,7 @@ import { isActive } from "@/utils/tripBookingUtils";
 import React from "react";
 
 export default function ShipRoutes({ props }) {
-  const { routes, setSelectedRoute, selectedRoute } = props;
+  const { routes, setSelectedRoute, selectedRoute ,value } = props;
   return (
     <React.Fragment>
       {routes
@@ -11,7 +11,7 @@ export default function ShipRoutes({ props }) {
             <label
               key={route.id}
               className={`border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300 ${isActive(
-                selectedRoute.id,
+                selectedRoute.id || value.data?.route_id,
                 route.id
               )}`}>
               <input

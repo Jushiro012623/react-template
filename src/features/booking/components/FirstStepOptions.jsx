@@ -5,9 +5,8 @@ import ChooseRouteModal from "./ChooseRouteModal";
 import Vessels from "./Vessels";
 
 const FirstStepOptions = ({props}) => {
-    
     const [isOpen, setIsOpen] = React.useState()
-    const { data } = props
+    const { data, dispatch } = props
     const { setValue, value } = React.useContext(MultiStepper)
     return (
         <div className="mb-5"> 
@@ -18,18 +17,18 @@ const FirstStepOptions = ({props}) => {
                 <React.Fragment>
                     <Typography variant="subheading2" className={`mt-7 mb-1`}>Choose your route</Typography>
                     <Typography variant="info">Lorem ipsum dolor sit amet consectetur.</Typography>
-                    <div className={`border h-10 mt-5 rounded-md flex items-center justify-center px-5 mb-3 ${value.route === null ? 'border-gray-200' : 'border-indigo-400 cursor-pointer' }`} onClick={()=>setIsOpen(`${value.route === null ? 'false' : 'true' }`)} >
+                    <div className={`border h-10 mt-5 rounded-md flex items-center justify-center px-5 mb-3 ${value.details.route.id === null ? 'border-gray-200' : 'border-indigo-400 cursor-pointer' }`} onClick={()=>setIsOpen(`${value.details.route.id === null  ? 'false' : 'true' }`)} >
                         <Typography variant="small" className={`capitalize`} >
-                            {value.route === null ? 'No Chosen Route' : 
+                            {value.details.route.id === null ?  'No Chosen Route' : 
                                 <React.Fragment>
-                                    <span className={`mr-5 ${value.route.type === 'out' ? 'text-red-400' : 'text-teal-400'}`}>{value.route.type}</span>
-                                    <span>{value.route.origin} - {value.route.destination}</span>
+                                    <span className={`mr-5 ${value.details.route.type === 'out' ? 'text-red-400' : 'text-teal-400'}`}>{value.details.route.type}</span>
+                                    <span>{value.details.route.origin} - {value.details.route.destination}</span>
                                 </React.Fragment>
                             }
                         </Typography>
                     </div>
                     <ChooseRouteModal props={{isOpen, setIsOpen}}/>
-                </React.Fragment>
+                </React.Fragment> 
                 {/* <Typography variant="info" className={`flex gap-1 italic`} color="warning"><IoIosInformationCircle size={16} /> All fields are required</Typography> */}
             </div>
         </div>
