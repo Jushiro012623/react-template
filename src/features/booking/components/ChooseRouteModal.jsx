@@ -10,27 +10,24 @@ export default function ChooseRouteModal({ props }) {
   const { isOpen, setIsOpen } = props;
   const { setValue, value, dispatch } = React.useContext(MultiStepper);
   // const [isOpen, setIsOpen] = React.useState()
-  const [routeType, setRouteType] = React.useState("out");
+  const [routeType, setRouteType] = React.useState(value.details.route?.type || 'out');
+
+  
   const {
     data: routes,
     loading,
     error,
   } = useDataFetcher(`route?transportation_type=${routeType}`);
-
-  const rideOptions = [
-    { id: 1, name: "Passenger" },
-    { id: 2, name: "Rolling Cargo" },
-    { id: 3, name: "Drop Caro" },
-  ];
-
-  const [selectedRoute, setSelectedRoute] = React.useState({
+  const intialRouteValue = {
     id: null,
     description: null,
     type: null,
-  });
+  }
+  const [selectedRoute, setSelectedRoute] = React.useState(intialRouteValue);
   const handleClose = () => {
     setIsOpen(false);
-    // setValue(prevState => ({ ...prevState, route : null} ))
+    setSelectedRoute(intialRouteValue);
+    console.log(selectedRoute);
   };
   return (
     <React.Fragment>
@@ -90,9 +87,11 @@ export default function ChooseRouteModal({ props }) {
                     details: { ...prevState.details, route: selectedRoute },
                   }));
                   setIsOpen(false);
-                  dispatch({ type: "NEXT" });
+                  console.log(value);
+                  value.data?.vessel_id ? dispatch({ type: "NEXT" }) : null ;
+
                 }}
-                disabled={selectedRoute.id === null ? true : false}>
+                disabled={selectedRoute.id || value.data?.route_id ? false : true}>
                 Confirm
               </Button>
               <Button

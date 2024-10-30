@@ -24,7 +24,7 @@ export default function SecondStepOptions() {
         {rideOptions.map((option) => (
           <label
             className={`relative grow flex-col flex items-center justify-center h-40 w-44 cursor-pointer rounded-md border transition-colors duration-300 ${isActive(
-              value.data.type_id,
+              value.data?.type_id,
               option.id
             )}`}
             key={option.id}>
@@ -37,7 +37,7 @@ export default function SecondStepOptions() {
                 setValue((prevState) => ({ ...prevState, data: {...prevState.data, type_id: option.id }}));
                 setIsOpen(true);
               }}
-              checked={value.data.type_id === option.id}
+              checked={value.data?.type_id === option.id}
             />
             <i>{option.icon}</i>
             <Typography variant="small3" className={`mt-2`}>
@@ -46,7 +46,7 @@ export default function SecondStepOptions() {
           </label>
         ))}
       </div>
-      <FillupInfo props={{ isOpen, option: value.data.type_id, setIsOpen}} />
+      <FillupInfo props={{ isOpen, option: value.data?.type_id, setIsOpen}} />
     </div>
   );
 }

@@ -6,8 +6,13 @@ import Vessels from "./Vessels";
 
 const FirstStepOptions = ({props}) => {
     const [isOpen, setIsOpen] = React.useState()
-    const { data, dispatch } = props
-    const { setValue, value } = React.useContext(MultiStepper)
+    const { data } = props
+    const { setValue, value, setIsDisable } = React.useContext(MultiStepper)
+    React.useEffect(() => {
+        const isRouteIdValid = Boolean(value.data?.route_id);
+        const isVesselIdValid = Boolean(value.data?.vessel_id);
+        setIsDisable(!(isRouteIdValid && isVesselIdValid));
+    }, [value]);
     return (
         <div className="mb-5"> 
             <Typography variant="h3">Let's get started</Typography>
@@ -17,7 +22,7 @@ const FirstStepOptions = ({props}) => {
                 <React.Fragment>
                     <Typography variant="subheading2" className={`mt-7 mb-1`}>Choose your route</Typography>
                     <Typography variant="info">Lorem ipsum dolor sit amet consectetur.</Typography>
-                    <div className={`border h-10 mt-5 rounded-md flex items-center justify-center px-5 mb-3 ${value.details.route.id === null ? 'border-gray-200' : 'border-indigo-400 cursor-pointer' }`} onClick={()=>setIsOpen(`${value.details.route.id === null  ? 'false' : 'true' }`)} >
+                    <div className={`border h-10 mt-5 rounded-md flex items-center justify-center px-5 mb-3 cursor-pointer ${value.details.route.id === null ? 'border-gray-200' : 'border-indigo-400 ' }`} onClick={()=>setIsOpen(`${value.details.route.id === null  ? 'false' : 'true' }`)} >
                         <Typography variant="small" className={`capitalize`} >
                             {value.details.route.id === null ?  'No Chosen Route' : 
                                 <React.Fragment>

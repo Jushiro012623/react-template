@@ -6,31 +6,16 @@ import { RxCross2 } from "react-icons/rx";
 import { IoIosArrowDown } from "react-icons/io";
 import { isActive } from "@/utils/tripBookingUtils";
 import InputWithLabel from "@/components/ui/InputWithLabel";
+import { isFormValid } from "@/utils/tripBookingUtils";
 export default function FillupInfo({ props }) {
   const { isOpen, option, setIsOpen } = props;
-  const { setValue, value, dispatch, setIsDisable } =
-    React.useContext(MultiStepper);
+  const { setValue, value, dispatch, setIsDisable } = React.useContext(MultiStepper);
   const [initialValue, setInitialValue] = React.useState({});
-
-  const isFormValid = () => {
-    if (option === 1) {
-      return initialValue.additional !== undefined;
-    } else if (option === 2) {
-      return (
-        initialValue.vehicle_type &&
-        initialValue.plate_number &&
-        initialValue.rolling_weight
-      );
-    } else if (option === 3) {
-      return (
-        initialValue.item_name &&
-        initialValue.description &&
-        initialValue.quantity &&
-        initialValue.drop_weight
-      );
-    }
-    return false;
-  };
+  const form = isFormValid(option, value, initialValue)
+  React.useEffect(() => {
+    setIsDisable( Boolean(!form) );
+    console.log( Boolean(!form));
+}, [value]);
   return (
     <React.Fragment>
       <div
@@ -55,11 +40,11 @@ export default function FillupInfo({ props }) {
                   );
                 case 2:
                   return (
-                    <RollingCargo props={{ initialValue, setInitialValue }} />
+                    <RollingCargo props={{ initialValue, setInitialValue, value }} />
                   );
                 case 3:
                   return (
-                    <DropCargo props={{ initialValue, setInitialValue }} />
+                    <DropCargo props={{ initialValue, setInitialValue, value }} />
                   );
                 default:
                   return <Typography variant="h2">Invalid Option</Typography>;
@@ -69,12 +54,11 @@ export default function FillupInfo({ props }) {
               <Button
                 type="button"
                 className={`w-full`}
-                disabled={!isFormValid()}
+                disabled={!form}
                 onClick={() => {
-                  setIsDisable(!isFormValid());
                   setValue((prevState) => ({
                     ...prevState,
-                    data: { ...prevState.data, ...initialValue }, //additional:1,
+                    data: { ...prevState.data, ...initialValue },
                   }));
                   setIsOpen(false);
                   dispatch({ type: "NEXT" });
@@ -182,7 +166,7 @@ const Passenger = ({ props }) => {
   );
 };
 const DropCargo = ({ props }) => {
-  const { initialValue, setInitialValue } = props;
+  const { initialValue, setInitialValue, value } = props;
   return (
     <React.Fragment>
       <Typography variant="h4">Drop Cargo</Typography>
@@ -191,7 +175,7 @@ const DropCargo = ({ props }) => {
           className={`w-full`}
           type="text"
           label="Item Name"
-          value={initialValue.item_name || ""}
+          value={value.data?.item_name || initialValue.item_name}
           onChange={(e) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -203,7 +187,7 @@ const DropCargo = ({ props }) => {
           className={`w-full`}
           type="text"
           label="Cargo Description"
-          value={initialValue.description || ""}
+          value={value.data?.description || initialValue.description}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -215,7 +199,7 @@ const DropCargo = ({ props }) => {
           className={`w-full`}
           type="number"
           label="Quantity"
-          value={initialValue.quantity || ""}
+          value={value.data?.quantity || initialValue.quantity}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -227,11 +211,11 @@ const DropCargo = ({ props }) => {
           className={`w-full`}
           type="number"
           label="Weight/KG"
-          value={initialValue.drop_weight || ""}
+          value={value.data?.weight || initialValue.weight}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
-              drop_weight: event.target.value,
+              weight: event.target.value,
             }))
           }
         />
@@ -240,7 +224,7 @@ const DropCargo = ({ props }) => {
   );
 };
 const RollingCargo = ({ props }) => {
-  const { initialValue, setInitialValue } = props;
+  const { initialValue, setInitialValue, value } = props;
   return (
     <React.Fragment>
       <Typography variant="h4">Rolling Cargo</Typography>
@@ -249,7 +233,7 @@ const RollingCargo = ({ props }) => {
           className={`w-full`}
           type="text"
           label="Vehicle Type"
-          value={initialValue.vehicle_type || ""}
+          value={value.data?.vehicle_type || initialValue.vehicle_type}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -261,7 +245,7 @@ const RollingCargo = ({ props }) => {
           className={`w-full`}
           type="text"
           label="Plate Number"
-          value={initialValue.plate_number || ""}
+          value={value.data?.plate_number || initialValue.plate_number}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -273,11 +257,11 @@ const RollingCargo = ({ props }) => {
           className={`w-full`}
           type="number"
           label="Weight/KG"
-          value={initialValue.rolling_weight || ""}
+          value={value.data?.weight || initialValue.weight}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
-              rolling_weight: event.target.value,
+              weight: event.target.value,
             }))
           }
         />

@@ -17,8 +17,9 @@ export default function TripBooking() {
   ];
   const { dispatch, state, maxStep } = useStepManager(stepDetails.length);
   const { data: vessels, loading: vesselsLoading, error: vesselsError } = useDataFetcher('vessel');
+  const [isDisable, setIsDisable] = React.useState(true)
+  // let isDisable = true
   const { error, loading, response, submitData } = useSubmitData()
-  const [isDisable, setIsDisable ] = React.useState(true)
   const ticketForm = React.useRef()
   const [value, setValue ] = React.useState({
     details:{
@@ -31,7 +32,6 @@ export default function TripBooking() {
     },
     data:null,
   })
-  
   const payload = (value) => {
     return {route_id: value.route.id,
       type_id:value.option,
@@ -62,7 +62,7 @@ export default function TripBooking() {
     }
   };
   return (
-    <MultiStepper.Provider value={{ setValue, value , dispatch, isDisable, setIsDisable }}>
+    <MultiStepper.Provider value={{ setValue, value , dispatch, state ,setIsDisable}}>
       <section className="w-full h-screen py-[120px] px-[5%]">
         <div className="flex border p-10 rounded-3xl bg-bg max-w-[1280px] mx-auto">
           <div className="mx-auto gap-[96px]">
@@ -71,12 +71,12 @@ export default function TripBooking() {
                 {(() => {
                 switch (state.step) {
                     case 1:
-                    // isDisable = value.vessel && value.route ? false : true 
-                    return <FirstStepOptions props={{ dispatch, state, data: vessels, loading: vesselsLoading, error: vesselsError }} />;
+
+                      return <FirstStepOptions props={{ data: vessels, loading: vesselsLoading, error: vesselsError }} />;
                     case 2:
-                    return <SecondStepOptions />
+                      return <SecondStepOptions />
                     case 3:
-                    return <ThirdStep />
+                      return <ThirdStep />
                     default:
                     // isDisable = true;
                     return <p>Default</p>;

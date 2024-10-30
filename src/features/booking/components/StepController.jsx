@@ -4,6 +4,7 @@ import Button from '../../../components/ui/Button';
  
 export default function StepController({ props }) {
     const {state, dispatch, maxStep, isDisable} = props
+    // console.log(state);
     return (
         <div className={`step-buttons flex w-full border-t border-dashed py-8 ${state.step === 1 ? 'justify-end' : 'justify-between'}`}>
             <Button 

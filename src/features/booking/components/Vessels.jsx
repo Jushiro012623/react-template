@@ -31,7 +31,7 @@ export default function Vessels({ props }) {
                     details: { ...prevState.details, vessel_name: vessel.attributes.name},
                     data:{ ...prevState.data, vessel_id: vessel.id }
                     }));
-                    setIsOpen(value.details && value.details.route_name ? false : true);
+                    setIsOpen(value.details && value.details.route.id ? false : true);
                 }}
                 checked={value.data?.vessel_id === vessel.id}
             />
