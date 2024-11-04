@@ -4,7 +4,10 @@ import { MultiStepper } from '@/pages/TripBooking'
 import React from 'react'
 import { IoIosArrowRoundForward } from "react-icons/io";
 export default function ThirdStep() {
-    const {setValue, value} = React.useContext(MultiStepper)
+    const {setIsDisable, value} = React.useContext(MultiStepper)
+    React.useEffect(() =>{
+      setIsDisable(false)
+    },[])
   return (
     <React.Fragment>
         <div>
@@ -21,10 +24,8 @@ export default function ThirdStep() {
             { customStyle: 'col-span-2', label: 'Ride Type', value: value.data.type_id === 1 ? 'Passenger' : (value.option === 2 ? 'Rolling Cargo' : 'Drop Cargo') },
             { customStyle: 'col-span-2', label: 'Email', value: 'Email' },
             { customStyle: 'col-span-4', label: 'Name', value: 'Name' },
-            // { customStyle: 'col-span-3', label: 'Discount Type', value: data.discount || 'N/A' },
             // { customStyle: 'col-span-1', label: 'Discounted Fare', value: data.discounted_fare },
             // { customStyle: 'col-span-2', label: 'Base Fare', value: data.base_fare },
-            // { customStyle: 'col-span-2', label: 'Additional Fee', value: data.additional_fee || 'N/A' },
             // { customStyle: 'col-span-4', label: 'Total Amount', value:data.total_amount },
           ].map((item, index) => (
             <div key={index} className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 ${item.customStyle}`}>
@@ -32,8 +33,66 @@ export default function ThirdStep() {
               <Typography variant='small2' className={`text-gray-600 capitalize `}>{item.value}</Typography>
             </div>
           ))}
+           {(() => {
+              switch (value.data?.type_id) {
+                case 1:
+                  return (
+                    <>
+                      <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 col-span-2 `}>
+                        <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">Additional Fee</Typography>
+                        <Typography variant='small2' className={`text-gray-600 capitalize `}>{value.data?.additional === "true" ? 'Airconditioned' : 'Basic'}</Typography>
+                      </div>
+                      <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 col-span-2 `}>
+                        <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">Discount</Typography>
+                        <Typography variant='small2' className={`text-gray-600 capitalize `}>{value.data?.discount}</Typography>
+                      </div>
+                    </>
+                  );
+                case 2:
+                  return (
+                    <>
+                      <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 col-span-4 `}>
+                        <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">Vehicle Type</Typography>
+                        <Typography variant='small2' className={`text-gray-600 capitalize `}>{value.data?.vehicle_type}</Typography>
+                      </div>
+                      <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 col-span-2 `}>
+                        <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">Plate Number</Typography>
+                        <Typography variant='small2' className={`text-gray-600 capitalize `}>{value.data?.plate_number}</Typography>
+                      </div>
+                      <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 col-span-2 `}>
+                        <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">Weight/KG</Typography>
+                        <Typography variant='small2' className={`text-gray-600 capitalize `}>{value.data?.weight}</Typography>
+                      </div>
+                    </>
+                    // <RollingCargo props={{ initialValue, setInitialValue, value }} />
+                  );
+                case 3:
+                  return (
+                    <>
+                      <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 col-span-2 `}>
+                        <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">Item Name</Typography>
+                        <Typography variant='small2' className={`text-gray-600 capitalize `}>{value.data?.item_name}</Typography>
+                      </div>
+                      <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 col-span-2 `}>
+                        <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">Quantity</Typography>
+                        <Typography variant='small2' className={`text-gray-600 capitalize `}>{value.data?.quantity}</Typography>
+                      </div>
+                      <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 col-span-3 `}>
+                        <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">Cargo Description</Typography>
+                        <Typography variant='small2' className={`text-gray-600 capitalize `}>{value.data?.description}</Typography>
+                      </div>
+                      <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 col-span-1 `}>
+                        <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">Weight/KG</Typography>
+                        <Typography variant='small2' className={`text-gray-600 capitalize `}>{value.data?.weight}</Typography>
+                      </div>
+                    </>
+                    // <DropCargo props={{ initialValue, setInitialValue, value }} />
+                  );
+                default:
+                  return <Typography variant="h2">Invalid Option</Typography>;
+              }
+            })()}
         </div>
-
         </div>
     </React.Fragment>
   )

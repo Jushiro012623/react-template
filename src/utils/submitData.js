@@ -7,7 +7,7 @@ const API = "http://127.0.0.1:8080/api";
  * @param {array|Object} customHeaders
  * */
 export const submitData = async (endpoint, data = '', customHeaders = null) => {
-  return await axios.post(
+  await axios.post(
     `${API}/${endpoint}`,
       data,
     {
@@ -17,10 +17,12 @@ export const submitData = async (endpoint, data = '', customHeaders = null) => {
       },
     }
   ).then((res) =>{
-    console.log(res); 
+    // console.log(res); 
+    return res.data
   }
   ).catch((err) => {
-    console.error(err);
+    // console.error(err);
+    throw new Error(err.response ? err.response.data : 'Network Error');
   })
 };
 

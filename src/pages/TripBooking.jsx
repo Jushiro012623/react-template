@@ -8,21 +8,28 @@ import SecondStepOptions from "@/features/booking/components/SecondStepOptions";
 import ThirdStep from "@/features/booking/components/ThirdStep";
 import useSubmitData from "@/hooks/useSubmitData";
 import useDocumentTitle from '@/hooks/useDocumentTitle'
-
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthProvider";
 export const MultiStepper = React.createContext()
 
 export default function TripBooking() {
   useDocumentTitle('Ticket Booking');
-  
+  const navigate = useNavigate()
   const stepDetails = [
     { id: 1, icon: <IoBoat />, details: "Route Details" },
     { id: 2, icon: <IoBoat />, details: "Booking Details" },
     { id: 3, icon: <IoBoat />, details: "Confirm" },
   ];
+  const user = useAuth()
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${user.token}`,
+    // 'referer' : 'http://localhost:5174'
+  }
   const { dispatch, state, maxStep } = useStepManager(stepDetails.length);
-  const { data: vessels, loading: vesselsLoading, error: vesselsError } = useDataFetcher('vessel');
+  const { data: vessels, loading: vesselsLoading, error: vesselsError } = useDataFetcher('vessel', null, headers);
   const [isDisable, setIsDisable] = React.useState(true)
-  // let isDisable = true
+
   const { error, loading, response, submitData } = useSubmitData()
   const ticketForm = React.useRef()
   const [value, setValue ] = React.useState({
@@ -50,20 +57,11 @@ export default function TripBooking() {
       quantity:value.details.quantity || null,
       payment_method_id:1}
   }
-  const headers = {
-    'Content-Type': 'application/json',
-    // 'Authorization': 'Bearer YOUR_TOKEN'
-  }
-  console.log(value);
+  
   const handleOnSubmit = async (event) => {
     event.preventDefault();
-    // submitData('ticket', payload(value), headers)
-    const formdata = new FormData(ticketForm);
-     console.log(formdata);
-    
-    if(response){
-      console.log(response);
-    }
+    await submitData('ticket', value.data, headers)
+    loading ? '' : navigate('/booking');
   };
   return (
     <MultiStepper.Provider value={{ setValue, value , dispatch, state ,setIsDisable}}>
@@ -75,7 +73,6 @@ export default function TripBooking() {
                 {(() => {
                 switch (state.step) {
                     case 1:
-
                       return <FirstStepOptions props={{ data: vessels, loading: vesselsLoading, error: vesselsError }} />;
                     case 2:
                       return <SecondStepOptions />
@@ -83,6 +80,7 @@ export default function TripBooking() {
                       return <ThirdStep />
                     default:
                     // isDisable = true;
+
                     return <p>Default</p>;
                 }
                 })()}

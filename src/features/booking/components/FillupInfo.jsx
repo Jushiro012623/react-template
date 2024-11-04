@@ -83,7 +83,7 @@ export default function FillupInfo({ props }) {
 }
 const Passenger = ({ props }) => {
   const { initialValue, setInitialValue,value } = props;
-  const radioValue = ['true','false']
+  // const radioValue = [true,false]
   const handleChange = (event) => {
     setInitialValue((prevState) => ({
       ...prevState,
@@ -102,8 +102,8 @@ const Passenger = ({ props }) => {
           id="discount"
           className="capitalize text-xs outline-none border w-full h-11 rounded-md px-4"
           onChange={handleChange}>
-          <option className="text-xs capitalize pointer-events-none" disabled>Discount</option>
-          <option className={`text-xs ${ value.data?.discount === 'regular' ? 'bg-red-300' : null}`} value="regular">
+          <option className="text-xs capitalize pointer-events-none">Discount</option>
+          <option className={`text-xs ${ (initialValue.discount || value.data?.discount) === 'regular' ? 'bg-red-300' : null}`} value="regular">
             Regular
           </option>
           <option className={`text-xs ${value.data?.discount === 'student' ? 'bg-red-300' : null }`} value="student">
@@ -126,34 +126,34 @@ const Passenger = ({ props }) => {
       </Typography>
       <div className="flex gap-2 w-full">
       <label
-        className={`grow min-w-[48%] border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300  ${ (initialValue.additional || value.data?.additional) === radioValue[0] ? 'border-indigo-400' : 'border-gray-200'  }`}>
+        className={`grow min-w-[48%] border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300  ${ (initialValue.additional || value.data?.additional) === 1 ? 'border-indigo-400' : 'border-gray-200'  }`}>
         <input
           type="radio"
           name="route"
-          value={radioValue[0]}
+          value={1}
           className="hidden"
           onChange={() =>{
             // console.log((initialValue.additional || value.data?.additional) == 1, initialValue.additional || value.data?.additional, 0);
-            setInitialValue((prevState) => ({ ...prevState, additional: radioValue[0] }))}
+            setInitialValue((prevState) => ({ ...prevState, additional: 1 }))}
           }
-          checked={initialValue.additional === radioValue[0]}
+          checked={initialValue.additional === 1}
         />
           <Typography variant="small" className={`capitalize`}>
             Airconditioned
           </Typography>
       </label>
       <label
-        className={`grow min-w-[48%] border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300  ${ (initialValue.additional || value.data?.additional) === radioValue[1] ? 'border-indigo-400' : 'border-gray-200'  }`}>
+        className={`grow min-w-[48%] border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300  ${ (initialValue.additional || value.data?.additional) === 2 ? 'border-indigo-400' : 'border-gray-200'  }`}>
         <input
           type="radio"
           name="route"
-          value={radioValue[1]}
+          value={2}
           className="hidden"
           onChange={() =>{
             // console.log((initialValue.additional || value.data?.additional) == 1, initialValue.additional || value.data?.additional, 0);
-            setInitialValue((prevState) => ({ ...prevState, additional: radioValue[1] }))}
+            setInitialValue((prevState) => ({ ...prevState, additional: 2 }))}
           }
-          checked={initialValue.additional === radioValue[1]}
+          checked={initialValue.additional === 2}
         />
           <Typography variant="small" className={`capitalize`}>
             Basic
@@ -175,7 +175,7 @@ const DropCargo = ({ props }) => {
           className={`w-full`}
           type="text"
           label="Item Name"
-          value={value.data?.item_name || initialValue.item_name}
+          value={initialValue.item_name}
           onChange={(e) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -187,7 +187,7 @@ const DropCargo = ({ props }) => {
           className={`w-full`}
           type="text"
           label="Cargo Description"
-          value={value.data?.description || initialValue.description}
+          value={initialValue.description}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -199,7 +199,7 @@ const DropCargo = ({ props }) => {
           className={`w-full`}
           type="number"
           label="Quantity"
-          value={value.data?.quantity || initialValue.quantity}
+          value={initialValue.quantity}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -211,7 +211,7 @@ const DropCargo = ({ props }) => {
           className={`w-full`}
           type="number"
           label="Weight/KG"
-          value={value.data?.weight || initialValue.weight}
+          value={initialValue.weight}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -233,7 +233,7 @@ const RollingCargo = ({ props }) => {
           className={`w-full`}
           type="text"
           label="Vehicle Type"
-          value={value.data?.vehicle_type || initialValue.vehicle_type}
+          value={initialValue.vehicle_type }
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -245,7 +245,7 @@ const RollingCargo = ({ props }) => {
           className={`w-full`}
           type="text"
           label="Plate Number"
-          value={value.data?.plate_number || initialValue.plate_number}
+          value={initialValue.plate_number}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
@@ -257,7 +257,7 @@ const RollingCargo = ({ props }) => {
           className={`w-full`}
           type="number"
           label="Weight/KG"
-          value={value.data?.weight || initialValue.weight}
+          value={initialValue.weight}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,

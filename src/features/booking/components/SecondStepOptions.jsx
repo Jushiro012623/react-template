@@ -33,6 +33,7 @@ export default function SecondStepOptions() {
               name="option"
               value={option.id}
               className="hidden"
+              onClick={()=> setIsOpen(true)}
               onChange={() => {
                 setValue((prevState) => ({ ...prevState, data: {...prevState.data, type_id: option.id }}));
                 setIsOpen(true);

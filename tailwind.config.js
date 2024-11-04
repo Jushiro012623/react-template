@@ -26,6 +26,10 @@ export default {
         modalDrop:{
           "0%": {  top:"0", opacity: "0" },
           "100%": { transform: "translate(-50%, -50%)", top:"50%", left:"50%", opacity: "1" },
+        },
+        loadingCircle: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
         }
       },
 
@@ -36,6 +40,7 @@ export default {
         appear: "appear .2s linear forwards",
         longerAppear: "show .2s linear .3s forwards",
         modalDrop: "modalDrop .2s linear forwards",
+        loadingCircle: "loadingCircle .7s linear infinite"
       },
       transitionProperty: {
         height: "height",

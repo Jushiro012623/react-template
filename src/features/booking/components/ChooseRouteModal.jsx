@@ -6,18 +6,22 @@ import { isActive } from "@/utils/tripBookingUtils";
 import React from "react";
 import { RxCross2 } from "react-icons/rx";
 import ShipRoutes from "./ShipRoutes";
+import { useAuth } from "@/context/AuthProvider";
 export default function ChooseRouteModal({ props }) {
   const { isOpen, setIsOpen } = props;
   const { setValue, value, dispatch } = React.useContext(MultiStepper);
   // const [isOpen, setIsOpen] = React.useState()
   const [routeType, setRouteType] = React.useState(value.details.route?.type || 'out');
-
-  
+  const user = useAuth()
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${user.token}`,
+  }
   const {
     data: routes,
     loading,
     error,
-  } = useDataFetcher(`route?transportation_type=${routeType}`);
+  } = useDataFetcher(`route?transportation_type=${routeType}`, null, headers);
   const intialRouteValue = {
     id: null,
     description: null,

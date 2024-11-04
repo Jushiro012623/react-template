@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 const baseUrl = `http://127.0.0.1:8080/api/`
-const useDataFetcher = (endpoint,params = null) => {
+const useDataFetcher = (endpoint,params = null,headers={}, method="GET") => {
     const [data, setData] = React.useState(null);
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(null);
@@ -10,9 +10,10 @@ const useDataFetcher = (endpoint,params = null) => {
             const fetchThisData = async () =>{
                 try { 
                     const response = await axios({
-                        method: 'get',
+                        method,
                         url: `${baseUrl}${endpoint}`,
-                        params: params
+                        params,
+                        headers
                     })
                     setLoading(false);
                     response && setData(response.data.data);

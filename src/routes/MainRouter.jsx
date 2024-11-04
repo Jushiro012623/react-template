@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
-import RootLayout from '../layouts/MainLayout';
+import MainLayout from '../layouts/MainLayout';
 import Loadable from './Loadable';
 
 const TripBooking = Loadable(React.lazy(() => import('../pages/TripBooking')));
@@ -10,13 +10,15 @@ const Login = Loadable(React.lazy(() => import('../pages/Login')));
 
 const MainRouter = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<RootLayout />}>
-      <Route path='booking' element={<TripBooking />} errorElement={<Loadable />} />
+    <React.Fragment>
+      <Route path='/' element={<MainLayout />}>
+        <Route path='booking' element={<TripBooking />} errorElement={<Loadable />} />
+        {/* <Route path='user' element={<UserList />} />
+        <Route path='user/add' element={<UserAdd />} />
+        <Route path='user/:id' element={<UserEdit />} /> */}
+      </Route>
       <Route path='login' element={<Login />} errorElement={<Loadable />} />
-      {/* <Route path='user' element={<UserList />} />
-      <Route path='user/add' element={<UserAdd />} />
-      <Route path='user/:id' element={<UserEdit />} /> */}
-    </Route>
+    </React.Fragment>
   )
 );
 
