@@ -10,11 +10,14 @@ import useSubmitData from "@/hooks/useSubmitData";
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthProvider";
+import useGetUser from "@/hooks/useGetUser";
 export const MultiStepper = React.createContext()
 
 export default function TripBooking() {
   useDocumentTitle('Ticket Booking');
   const navigate = useNavigate()
+  const { user:user_ } = useGetUser()
+
   const stepDetails = [
     { id: 1, icon: <IoBoat />, details: "Route Details" },
     { id: 2, icon: <IoBoat />, details: "Booking Details" },
@@ -64,7 +67,7 @@ export default function TripBooking() {
     loading ? '' : navigate('/booking');
   };
   return (
-    <MultiStepper.Provider value={{ setValue, value , dispatch, state ,setIsDisable}}>
+    <MultiStepper.Provider value={{ setValue, value , dispatch, state ,setIsDisable, user_}}>
       <section className="w-full h-screen py-[120px] px-[5%]">
         <div className="flex border p-10 rounded-3xl bg-bg max-w-[1280px] mx-auto">
           <div className="mx-auto gap-[96px]">

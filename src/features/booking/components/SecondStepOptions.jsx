@@ -20,7 +20,7 @@ export default function SecondStepOptions() {
       <Typography variant="small" className={`mt-2 mb-7`}>
         Please choose and fill the fields below .
       </Typography>
-      <div className="flex gap-x-2">
+      <div className="flex gap-x-2 mb-7">
         {rideOptions.map((option) => (
           <label
             className={`relative grow flex-col flex items-center justify-center h-40 w-44 cursor-pointer rounded-md border transition-colors duration-300 ${isActive(

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-const API = "http://127.0.0.1:8080/api";
+const API = process.env.APP || `http://127.0.0.1:8080/api`
 
 export default function useSubmitData() {
     const [loading, setLoading] = React.useState(false);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Button from "@/components/ui/Button";
 import Typography from "@/components/ui/Typography";
 import MiddleInput from "@/components/ui/MiddleInput";
@@ -10,14 +10,10 @@ import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { useAuth } from "@/context/AuthProvider";
 export default function Login() {
   const [loading, setLoading] = React.useState(false)
-  const navigate = useNavigate();
   const auth = useAuth();
   useDocumentTitle("Login");
   const [inputError, setInputError] = React.useState()
-  const [input, setInput] = React.useState({
-    email: "",
-    password: "",
-  });
+  const [input, setInput] = React.useState({});
   const handleChange = (field, value) => {
     setInput((prevState) => ({ ...prevState, [field]: value }));
   };
@@ -26,7 +22,6 @@ const handleSubmit = async (e) => {
   setLoading(true);
   try {
     await auth.loginAction(input);
-    navigate("/booking");
   } catch (error) {
     setInputError(error.response.data.errors)
   }finally{
@@ -72,9 +67,9 @@ const handleSubmit = async (e) => {
           className={`text-center mt-6 relative after:absolute  after:w-[38%] after:h-[.5px] after:bg-gray-300 after:left-0 after:top-1/2 after:-translate-y-1/2  before:absolute  before:w-[38%] before:h-[.5px] before:bg-gray-300 before:right-0 before:top-1/2 before:-translate-y-1/2`}>
           No Account
         </Typography>
-        <Button size="small2" type="submit" variant="border" className="mt-6">
+        <Link  className="mt-6 bg-border border text-slate-900 py-3 px-4 text-xs text-center" to={'/register'}>
           Create Account
-        </Button>
+        </Link>
       </form>
     </section>
   );

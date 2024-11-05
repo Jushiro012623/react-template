@@ -9,7 +9,7 @@ export default function InputWithLabel({
     message,
     className,
     onChange = () => {},
-    value = '',
+    // value = '',
     ...props
   }) {
     const variantClass = variants[variant] || variants.default;
@@ -31,7 +31,7 @@ export default function InputWithLabel({
           )}
           placeholder={label}
           onChange={onChange}
-          value={value}
+          // value={value}
           {...props}
         />
         <Typography variant="info" color={variant} className={`mt-1`}>
