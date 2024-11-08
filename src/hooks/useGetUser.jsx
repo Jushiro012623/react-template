@@ -2,8 +2,8 @@ import { useAuth } from '@/context/AuthProvider';
 import axios from 'axios';
 import React from 'react'
 const APP = process.env.APP || `http://127.0.0.1:8080/api`
-export default function useGetUser() {
-    const auth = useAuth()
+export default function useGetUser({token}) {
+    // const auth = useAuth()
     const [user, setUser] = React.useState()
     React.useEffect(()=>{
       const getUser = async () => {
@@ -11,7 +11,7 @@ export default function useGetUser() {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    'Authorization': `Bearer ${auth.token}`,
+                    'Authorization': `Bearer ${token}`,
             },
             }).then((res) => {
                 console.log(res.data);

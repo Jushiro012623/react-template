@@ -23,7 +23,7 @@ const handleSubmit = async (e) => {
   try {
     await auth.loginAction(input);
   } catch (error) {
-    setInputError(error.response.data.errors)
+    setInputError(error.response?.data.errors)
   }finally{
     setLoading(false);
   }

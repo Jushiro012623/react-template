@@ -10,14 +10,23 @@ import useSubmitData from "@/hooks/useSubmitData";
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthProvider";
-import useGetUser from "@/hooks/useGetUser";
 import MiniLoader from "@/components/ui/MiniLoader";
 export const MultiStepper = React.createContext()
 
 export default function TripBooking() {
   useDocumentTitle('Ticket Booking');
   const navigate = useNavigate()
-  const { user:user_ } = useGetUser()
+  const [user_, serUser_] = React.useState({})
+  React.useEffect(()=>{
+    serUser_({
+      name: localStorage.getItem('name'),
+      email: localStorage.getItem('email') 
+    })
+  },[])
+  // const user_ = {
+  //   name: localStorage.getItem('name') || temp_user.name,
+  //   email: localStorage.getItem('email') || temp_user.email,
+  // }
 
   const stepDetails = [
     { id: 1, icon: <IoBoat />, details: "Route Details" },

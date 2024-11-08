@@ -79,7 +79,7 @@ export default function ThirdStep() {
                     </div>
                     <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 col-span-3 `}>
                       <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">Cargo Description</Typography>
-                      <Typography variant='small2' className={`text-gray-600 capitalize `}>{value.data?.description}</Typography>
+                      <Typography variant='small2' className={`text-gray-600 capitalize `}>{value.data?.cargo_description}</Typography>
                     </div>
                     <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 col-span-1 `}>
                       <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">Weight/KG</Typography>
