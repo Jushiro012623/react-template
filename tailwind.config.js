@@ -49,7 +49,21 @@ export default {
       colors:{
         bg:{
           DEFAULT: '#F5F5F5'
-        }
+        },
+        primary: '#4A90E2',         // Primary Color (Blue)
+        accent: '#5B8FF9',     
+        stepCompleted: '#8BC34A',
+        stepActive: '#4CAF50',      // Step Indicator Active Color (Green)
+        background: '#F9F9F9',      // Background Color (Light Gray)
+        formBackground: '#FFFFFF',  // Form Background (White)
+        inputBorder: '#D1D5DB',     // Input Border Color (Light Gray)
+        textPrimary: '#333333',     // Text Color (Primary, Dark Gray)
+        textSecondary: '#6B6B6B',   // Text Color (Secondary, Medium Gray)
+        error: '#F44336',           // Error Color (Red)
+        warning: '#FF9800',         // Warning Color (Orange)
+        success: '#8BC34A',         // Success Color (Green)
+        subtleAccent: '#9C27B0',    // Subtle Accent Color (Purple)
+        lightAccent: '#E1F5FE', 
       }
     },
   },

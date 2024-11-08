@@ -34,7 +34,7 @@ export default function ShipRoutes({ props }) {
                 variant="small"
                 className={`capitalize ${
                   route.transportationType === "out"
-                    ? "text-rose-400"
+                    ? "text-blue-400"
                     : "text-teal-400"
                 }`}>
                 {route.transportationType}

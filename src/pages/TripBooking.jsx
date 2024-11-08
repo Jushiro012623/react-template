@@ -11,6 +11,7 @@ import useDocumentTitle from '@/hooks/useDocumentTitle'
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthProvider";
 import useGetUser from "@/hooks/useGetUser";
+import MiniLoader from "@/components/ui/MiniLoader";
 export const MultiStepper = React.createContext()
 
 export default function TripBooking() {
@@ -46,30 +47,18 @@ export default function TripBooking() {
     },
     data:null,
   })
-  const payload = (value) => {
-    return {route_id: value.route.id,
-      type_id:value.option,
-      additional:value.details.additional || 0,
-      vessel_id: value.vessel.id,
-      weight:value.details.rolling_weight || value.details.drop_weight || null,
-      discount: value.details.discount || 'regular',
-      vehicle_type:value.details.vehicle_type || null,
-      plate_number:value.details.plate_number || null,
-      cargo_description:value.details.cargo_description || null,
-      item_name:value.details.item_name || null,
-      quantity:value.details.quantity || null,
-      payment_method_id:1}
-  }
   
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     await submitData('ticket', value.data, headers)
-    loading ? '' : navigate('/booking');
+    if(!loading){ 
+      navigate('complete');
+    }
   };
   return (
     <MultiStepper.Provider value={{ setValue, value , dispatch, state ,setIsDisable, user_}}>
       <section className="w-full h-screen py-[120px] px-[5%]">
-        <div className="flex border p-10 rounded-3xl bg-bg max-w-[1280px] mx-auto">
+        <div className="relative flex border p-10 rounded-3xl bg-bg max-w-[1280px] mx-auto">
           <div className="mx-auto gap-[96px]">
             <StepTracker props={{ state, stepDetails, maxStep }} />
             <form onSubmit={handleOnSubmit} ref={ticketForm} className='ticket-form step-body mx-auto mt-24 px-10 rounded-xl flex flex-col border pt-10 bg-white select-none max-w-[652.11px]'>
@@ -90,6 +79,7 @@ export default function TripBooking() {
                 <StepController props={{ dispatch, state, maxStep, isDisable}} />
             </form>
           </div>
+          {loading && <MiniLoader className={`absolute w-full h-full top-0 left-0 bg-slate-900/40 rounded-3xl `}/>} {/* Show MiniLoader when submitting */}
         </div>
       </section>
     </MultiStepper.Provider>

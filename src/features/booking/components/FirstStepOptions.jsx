@@ -3,6 +3,7 @@ import React from "react";
 import { MultiStepper } from "@/pages/TripBooking";
 import ChooseRouteModal from "./ChooseRouteModal";
 import Vessels from "./Vessels";
+import MiniLoader from "@/components/ui/MiniLoader";
 
 const FirstStepOptions = ({props}) => {
     const [isOpen, setIsOpen] = React.useState()
@@ -13,6 +14,9 @@ const FirstStepOptions = ({props}) => {
         const isVesselIdValid = Boolean(value.data?.vessel_id);
         setIsDisable(!(isRouteIdValid && isVesselIdValid));
     }, [value]);
+    if(!data){
+        return <MiniLoader className={`min-h-[405px]`} color={`#6a6a6a`}/>
+    }
     return (
         <div className="mb-5"> 
             <Typography variant="h3">Let's get started</Typography>

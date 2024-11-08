@@ -187,11 +187,11 @@ const DropCargo = ({ props }) => {
           className={`w-full`}
           type="text"
           label="Cargo Description"
-          value={initialValue.description}
+          value={initialValue.cargo_description}
           onChange={(event) =>
             setInitialValue((prevState) => ({
               ...prevState,
-              description: event.target.value,
+              cargo_description: event.target.value,
             }))
           }
         />

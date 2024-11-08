@@ -7,9 +7,9 @@ const StepTracker = ({props}) => {
 
     const stateClass = (state, detail) =>{
         if(state.step > detail.id || state.status === 'complete'){
-            return 'bg-green-500 text-white'
+            return 'bg-stepCompleted text-white'
         }else if (state.step === detail.id){
-            return 'bg-indigo-400 text-white'
+            return 'bg-stepActive text-white'
         }else{
             return 'bg-transparent  text-gray-400'
         }

@@ -7,10 +7,10 @@ import React from "react";
 import { RxCross2 } from "react-icons/rx";
 import ShipRoutes from "./ShipRoutes";
 import { useAuth } from "@/context/AuthProvider";
+import MiniLoader from "@/components/ui/MiniLoader";
 export default function ChooseRouteModal({ props }) {
   const { isOpen, setIsOpen } = props;
   const { setValue, value, dispatch } = React.useContext(MultiStepper);
-  // const [isOpen, setIsOpen] = React.useState()
   const [routeType, setRouteType] = React.useState(value.details.route?.type || 'out');
   const user = useAuth()
   const headers = {
@@ -79,7 +79,9 @@ export default function ChooseRouteModal({ props }) {
             <Typography variant="subheading2" className={`mt-5`}>
               Available Routes
             </Typography>
+            {loading ? <MiniLoader className={`min-h-48`}/> :
             <ShipRoutes props={{ routes, selectedRoute, setSelectedRoute, value }} />
+            }
             <div className="mt-5 border-t-2 border-dotted pt-5">
               <Button
                 type="button"
