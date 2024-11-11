@@ -67,6 +67,10 @@ const variants = {
     type: "label",
     class: "text-[11px]",
   },
+  span: {
+    type: "span",
+    class: "",
+  },
 };
 export const colors = {
   default: "text-slate-900", // Dark gray for default text

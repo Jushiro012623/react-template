@@ -11,6 +11,8 @@ import useDocumentTitle from '@/hooks/useDocumentTitle'
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthProvider";
 import MiniLoader from "@/components/ui/MiniLoader";
+import Typography from "@/components/ui/Typography";
+import Summary from "@/features/booking/components/Summary";
 export const MultiStepper = React.createContext()
 
 export default function TripBooking() {
@@ -56,6 +58,7 @@ export default function TripBooking() {
     },
     data:null,
   })
+  console.log(value);
   
   const handleOnSubmit = async (event) => {
     event.preventDefault();
@@ -67,7 +70,11 @@ export default function TripBooking() {
   return (
     <MultiStepper.Provider value={{ setValue, value , dispatch, state ,setIsDisable, user_}}>
       <section className="w-full h-screen py-[120px] px-[5%]">
-        <div className="relative flex border p-10 rounded-3xl bg-bg max-w-[1280px] mx-auto">
+        {/* <div className="relative flex border p-10 rounded-3xl bg-bg max-w-[1280px] mx-auto"> */}
+        <div className="relative flex border p-10 rounded-3xl bg-bg max-w-[1180px] mx-auto">
+          { state.step !== 4 ?
+            <Summary value={value}/> : ''
+          }
           <div className="mx-auto gap-[96px]">
             <StepTracker props={{ state, stepDetails, maxStep }} />
             <form onSubmit={handleOnSubmit} ref={ticketForm} className='ticket-form step-body mx-auto mt-24 px-10 rounded-xl flex flex-col border pt-10 bg-white select-none max-w-[652.11px]'>
