@@ -7,14 +7,16 @@ import { IoIosArrowDown } from "react-icons/io";
 import InputWithLabel from "@/components/ui/InputWithLabel";
 import { isFormValid } from "@/utils/tripBookingUtils";
 import { submitData } from "@/utils/submitData";
+import { useAuth } from "@/context/AuthProvider";
 export default function FillupInfo({ props }) {
   const { isOpen, option, setIsOpen } = props;
   const { setValue, value, dispatch, setIsDisable } = React.useContext(MultiStepper);
   const [initialValue, setInitialValue] = React.useState({});
   const form = isFormValid(option, value, initialValue)
+  const user = useAuth()
   const headers = {
     'Content-Type': 'application/json',
-    // 'Authorization': `Bearer ${user.token}`,
+    'Authorization': `Bearer ${user.token}`,
   }
   const handleSubmit = async (event) => {
     event.preventDefault();

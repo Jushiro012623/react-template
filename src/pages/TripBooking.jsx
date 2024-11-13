@@ -13,6 +13,7 @@ import { useAuth } from "@/context/AuthProvider";
 import MiniLoader from "@/components/ui/MiniLoader";
 import Typography from "@/components/ui/Typography";
 import Summary from "@/features/booking/components/Summary";
+import { submitData } from "@/utils/submitData";
 export const MultiStepper = React.createContext()
 
 export default function TripBooking() {
