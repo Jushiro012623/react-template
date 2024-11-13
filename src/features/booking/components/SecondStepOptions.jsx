@@ -9,6 +9,7 @@ import FillupInfo from "./FillupInfo";
 export default function SecondStepOptions() {
   const [isOpen, setIsOpen] = React.useState();
   const { value, setValue } = React.useContext(MultiStepper);
+  
   const rideOptions = [
     { id: 1, icon: <FaUserAlt size={35} />, name: "Passenger" },
     { id: 2, icon: <GiCarWheel size={35} />, name: "Rolling Cargo" },
@@ -23,7 +24,7 @@ export default function SecondStepOptions() {
       <div className="flex gap-x-2 mb-7">
         {rideOptions.map((option) => (
           <label
-            className={`relative grow flex-col flex items-center justify-center h-40 w-44 cursor-pointer rounded-md border transition-colors duration-300 ${isActive(
+            className={`hover:shadow-md relative grow flex-col flex items-center justify-center h-40 w-44 cursor-pointer rounded-md border transition-colors duration-300 ${isActive(
               value.data?.type_id,
               option.id
             )}`}

@@ -12,6 +12,9 @@ const AuthProvider = ({ children }) => {
     const fetchUser = async () => {
       if(!user && token){
        await useGetUser(token)
+      }else if (!token){
+        localStorage.removeItem("name");
+        localStorage.removeItem("email");
       }
     }
     fetchUser()

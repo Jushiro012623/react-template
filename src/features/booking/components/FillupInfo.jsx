@@ -4,18 +4,42 @@ import { MultiStepper } from "@/pages/TripBooking";
 import React from "react";
 import { RxCross2 } from "react-icons/rx";
 import { IoIosArrowDown } from "react-icons/io";
-import { isActive } from "@/utils/tripBookingUtils";
 import InputWithLabel from "@/components/ui/InputWithLabel";
 import { isFormValid } from "@/utils/tripBookingUtils";
+import { submitData } from "@/utils/submitData";
 export default function FillupInfo({ props }) {
   const { isOpen, option, setIsOpen } = props;
   const { setValue, value, dispatch, setIsDisable } = React.useContext(MultiStepper);
   const [initialValue, setInitialValue] = React.useState({});
   const form = isFormValid(option, value, initialValue)
+  const headers = {
+    'Content-Type': 'application/json',
+    // 'Authorization': `Bearer ${user.token}`,
+  }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+      try{
+        const res = await submitData('fare/transactionFare', {
+          'discount_id': parseInt(initialValue.discount_id),
+          'type_id': value.data?.type_id,
+          'route_id': value.data?.route_id,
+          'weight': initialValue.weight || {}
+        }, headers)
+        setValue((prevState) => ({
+          ...prevState,
+          data: { ...prevState.data, ...initialValue,  },
+          discount : res.data
+        }));
+        setIsOpen(false);
+        dispatch({ type: "NEXT" });
+      }catch (err) {
+        console.error(err);
+      }
+  }
   React.useEffect(() => {
-    setIsDisable( Boolean(!form) );
-    console.log( Boolean(!form));
-}, [value]);
+      setIsDisable( Boolean(!form) );
+      console.log( Boolean(!form));
+  }, [value]);
   return (
     <React.Fragment>
       <div
@@ -55,14 +79,7 @@ export default function FillupInfo({ props }) {
                 type="button"
                 className={`w-full`}
                 disabled={!form}
-                onClick={() => {
-                  setValue((prevState) => ({
-                    ...prevState,
-                    data: { ...prevState.data, ...initialValue },
-                  }));
-                  setIsOpen(false);
-                  dispatch({ type: "NEXT" });
-                }}>
+                onClick={handleSubmit}>
                 Confirm
               </Button>
               <Button
@@ -87,7 +104,7 @@ const Passenger = ({ props }) => {
   const handleChange = (event) => {
     setInitialValue((prevState) => ({
       ...prevState,
-      discount: event.target.value,
+      discount_id: event.target.value,
     }));
   };
   return (
@@ -98,24 +115,24 @@ const Passenger = ({ props }) => {
           Select discount
         </Typography>
         <select
-          name="discount"
-          id="discount"
-          className="capitalize text-xs outline-none border w-full h-11 rounded-md px-4"
+          name="discount_id"
+          id="discount_id"
+          className="hover:shadow-md capitalize text-xs outline-none border w-full h-11 rounded-md px-4"
           onChange={handleChange}>
-          <option className="text-xs capitalize pointer-events-none">Discount</option>
-          <option className={`text-xs ${ (initialValue.discount || value.data?.discount) === 'regular' ? 'bg-red-300' : null}`} value="regular">
+          <option className="text-xs capitalize pointer-events-none">discount</option>
+          <option className={`text-xs ${ (initialValue.discount_id || value.data?.discount_id) === 'regular' ? 'bg-red-300' : null}`} value="1">
             Regular
           </option>
-          <option className={`text-xs ${value.data?.discount === 'student' ? 'bg-red-300' : null }`} value="student">
+          <option className={`text-xs ${value.data?.discount_id === 'student' ? 'bg-red-300' : null }`} value="5">
             Student
           </option>
-          <option className="text-xs" value="pwd_senior">
+          <option className="text-xs" value="2">
             PWD/Senior
           </option>
-          <option className="text-xs" value="half_fare">
+          <option className="text-xs" value="3">
             Half Fare
           </option>
-          <option className="text-xs" value="minor">
+          <option className="text-xs" value="4">
             Minor
           </option>
         </select>
@@ -126,7 +143,7 @@ const Passenger = ({ props }) => {
       </Typography>
       <div className="flex gap-2 w-full">
       <label
-        className={`grow min-w-[48%] border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300  ${ (initialValue.additional || value.data?.additional) === 1 ? 'border-indigo-400' : 'border-gray-200'  }`}>
+        className={`hover:shadow-md grow min-w-[48%] border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300  ${ (initialValue.additional || value.data?.additional) === 1 ? 'border-indigo-400' : 'border-gray-200'  }`}>
         <input
           type="radio"
           name="route"
@@ -143,7 +160,7 @@ const Passenger = ({ props }) => {
           </Typography>
       </label>
       <label
-        className={`grow min-w-[48%] border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300  ${ (initialValue.additional || value.data?.additional) === 2 ? 'border-indigo-400' : 'border-gray-200'  }`}>
+        className={`hover:shadow-md grow min-w-[48%] border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300  ${ (initialValue.additional || value.data?.additional) === 2 ? 'border-indigo-400' : 'border-gray-200'  }`}>
         <input
           type="radio"
           name="route"
@@ -171,54 +188,10 @@ const DropCargo = ({ props }) => {
     <React.Fragment>
       <Typography variant="h4">Drop Cargo</Typography>
       <div className="flex flex-col gap-3 mt-6 w-full">
-        <InputWithLabel
-          className={`w-full`}
-          type="text"
-          label="Item Name"
-          value={initialValue.item_name}
-          onChange={(e) =>
-            setInitialValue((prevState) => ({
-              ...prevState,
-              item_name: e.target.value,
-            }))
-          }
-        />
-        <InputWithLabel
-          className={`w-full`}
-          type="text"
-          label="Cargo Description"
-          value={initialValue.cargo_description}
-          onChange={(event) =>
-            setInitialValue((prevState) => ({
-              ...prevState,
-              cargo_description: event.target.value,
-            }))
-          }
-        />
-        <InputWithLabel
-          className={`w-full`}
-          type="number"
-          label="Quantity"
-          value={initialValue.quantity}
-          onChange={(event) =>
-            setInitialValue((prevState) => ({
-              ...prevState,
-              quantity: event.target.value,
-            }))
-          }
-        />
-        <InputWithLabel
-          className={`w-full`}
-          type="number"
-          label="Weight/KG"
-          value={initialValue.weight}
-          onChange={(event) =>
-            setInitialValue((prevState) => ({
-              ...prevState,
-              weight: event.target.value,
-            }))
-          }
-        />
+        <InputValue label="Item Name" value={initialValue.item_name} setInitialValue={setInitialValue} state="item_name" />
+        <InputValue label="Cargo Description" value={initialValue.cargo_description} setInitialValue={setInitialValue} state="cargo_description" />
+        <InputValue type="number" label="Quantity" value={initialValue.quantity} setInitialValue={setInitialValue} state="quantity" />
+        <InputValue type="number" label="Weight/KG" value={initialValue.weight} setInitialValue={setInitialValue} state="weight" />
       </div>
     </React.Fragment>
   );
@@ -229,43 +202,25 @@ const RollingCargo = ({ props }) => {
     <React.Fragment>
       <Typography variant="h4">Rolling Cargo</Typography>
       <div className="flex flex-col gap-3 mt-6 w-full">
-        <InputWithLabel
-          className={`w-full`}
-          type="text"
-          label="Vehicle Type"
-          value={initialValue.vehicle_type }
-          onChange={(event) =>
-            setInitialValue((prevState) => ({
-              ...prevState,
-              vehicle_type: event.target.value,
-            }))
-          }
-        />
-        <InputWithLabel
-          className={`w-full`}
-          type="text"
-          label="Plate Number"
-          value={initialValue.plate_number}
-          onChange={(event) =>
-            setInitialValue((prevState) => ({
-              ...prevState,
-              plate_number: event.target.value,
-            }))
-          }
-        />
-        <InputWithLabel
-          className={`w-full`}
-          type="number"
-          label="Weight/KG"
-          value={initialValue.weight}
-          onChange={(event) =>
-            setInitialValue((prevState) => ({
-              ...prevState,
-              weight: event.target.value,
-            }))
-          }
-        />
+        <InputValue label="Vehicle Type" value={initialValue.vehicle_type} setInitialValue={setInitialValue} state="vehicle_type" />
+        <InputValue type="number" label="Weight/KG" value={initialValue.weight} setInitialValue={setInitialValue} state="weight" />
+        <InputValue label="Plate Number" value={initialValue.plate_number} setInitialValue={setInitialValue} state="plate_number" />
       </div>
     </React.Fragment>
   );
 };
+
+const InputValue = ({label, value, setInitialValue, state, type = "text"}) => {
+  return <InputWithLabel
+  className={`w-full hover:shadow-md focus:shadow-md `}
+  type={type}
+  label={label}
+  value={value}
+  onChange={(e) =>
+    setInitialValue((prevState) => ({
+      ...prevState,
+      [state] : e.target.value,
+    }))
+  }
+/>
+}

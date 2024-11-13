@@ -3,28 +3,24 @@ import axios from 'axios';
 
 const API = process.env.APP || `http://127.0.0.1:8080/api`
 
-export default function useSubmitData() {
-    const [loading, setLoading] = React.useState(false);
+export default async function  useSubmitData(endpoint, data, headers = {}, method = 'POST') {
+    const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(null);
     const [response, setResponse] = React.useState(null);
-
-    const submitData = async (endpoint, data, headers = {}, method = 'POST') => {
-        setLoading(true);
-        setError(null);
-        const url = `${API}/${endpoint}`;
-        try {
-            const res = await axios({
-                method,
-                url,
-                data,
-                headers,
-            });
-            setResponse(res.data);
-        } catch (err) {
-            setError(err.response ? err.response.data : { message: "Network Error" });
-        } finally {
-            setLoading(false);
-        }
-    };
-    return { submitData, error, loading, response };
+    const url = `${API}/${endpoint}`;
+    try {
+        const res = await axios({
+            method,
+            url,
+            data,
+            headers,
+        });
+        setResponse(res.data);
+    } catch (err) {
+        setError(err.response ? err.response.data : { message: "Network Error" });
+    } 
+    finally {
+        setLoading(false);
+    }
+    return { error, loading, response };
 }

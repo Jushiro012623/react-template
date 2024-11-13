@@ -6,7 +6,7 @@ import { IoBoat } from "react-icons/io5";
 import useDataFetcher from "@/hooks/useDataFetcher";
 import SecondStepOptions from "@/features/booking/components/SecondStepOptions";
 import ThirdStep from "@/features/booking/components/ThirdStep";
-import useSubmitData from "@/hooks/useSubmitData";
+// import useSubmitData from "@/hooks/useSubmitData";
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthProvider";
@@ -17,6 +17,7 @@ export const MultiStepper = React.createContext()
 
 export default function TripBooking() {
   useDocumentTitle('Ticket Booking');
+  const [loading, setLoading] = React.useState(false)
   const navigate = useNavigate()
   const [user_, serUser_] = React.useState({})
   React.useEffect(()=>{
@@ -45,9 +46,12 @@ export default function TripBooking() {
   const { data: vessels, loading: vesselsLoading, error: vesselsError } = useDataFetcher('vessel', null, headers);
   const [isDisable, setIsDisable] = React.useState(true)
 
-  const { error, loading, response, submitData } = useSubmitData()
+  // const { error, loading, response, submitData } = useSubmitData()
   const ticketForm = React.useRef()
   const [value, setValue ] = React.useState({
+    data:{
+      ticket_number : `GT-${Math.random().toString(36).substring(2, 10000000000).toUpperCase()}`
+    },
     details:{
       route: {
         type:null,
@@ -56,15 +60,20 @@ export default function TripBooking() {
         id:null
       }
     },
-    data:null,
+    // data:null,
   })
   console.log(value);
   
   const handleOnSubmit = async (event) => {
     event.preventDefault();
-    await submitData('ticket', value.data, headers)
-    if(!loading){ 
+    setLoading(true);
+    try{
+      await submitData('ticket', value.data, headers)
+      setLoading(false);
       navigate('complete');
+    }catch(err){
+      console.log('Error', err);
+      setLoading(false);
     }
   };
   return (
@@ -77,7 +86,7 @@ export default function TripBooking() {
           }
           <div className="mx-auto gap-[96px]">
             <StepTracker props={{ state, stepDetails, maxStep }} />
-            <form onSubmit={handleOnSubmit} ref={ticketForm} className='ticket-form step-body mx-auto mt-24 px-10 rounded-xl flex flex-col border pt-10 bg-white select-none max-w-[652.11px]'>
+            <form onSubmit={handleOnSubmit} ref={ticketForm} className={`ticket-form step-body mx-auto mt-24 px-10 pt-10 border bg-white rounded-xl flex flex-col select-none max-w-[652.11px]`}>
                 {(() => {
                 switch (state.step) {
                     case 1:
@@ -95,7 +104,8 @@ export default function TripBooking() {
                 <StepController props={{ dispatch, state, maxStep, isDisable}} />
             </form>
           </div>
-          {loading && <MiniLoader className={`absolute w-full h-full top-0 left-0 bg-slate-900/40 rounded-3xl `}/>} {/* Show MiniLoader when submitting */}
+          {loading && <MiniLoader className={`absolute w-full h-full top-0 left-0 bg-slate-900/40 rounded-3xl `}/>  }
+          {/* Show MiniLoader when submitting */}
         </div>
       </section>
     </MultiStepper.Provider>

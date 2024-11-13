@@ -58,7 +58,7 @@ export default function ChooseRouteModal({ props }) {
               <Button
                 variant="border"
                 type="button"
-                className={`grow h-12 transition-colors duration-300 ${isActive(
+                className={`grow h-12 transition-colors duration-300 hover:shadow-md ${isActive(
                   routeType,
                   "out"
                 )}`}
@@ -68,7 +68,7 @@ export default function ChooseRouteModal({ props }) {
               <Button
                 variant="border"
                 type="button"
-                className={`grow h-12 transition-colors duration-300 ${isActive(
+                className={`grow h-12 transition-colors duration-300 hover:shadow-md ${isActive(
                   routeType,
                   "in"
                 )}`}

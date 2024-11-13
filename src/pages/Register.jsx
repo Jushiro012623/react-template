@@ -3,14 +3,13 @@ import InputWithLabel from '@/components/ui/InputWithLabel'
 import { CombinationLogo } from '@/components/ui/Logo'
 import Typography from '@/components/ui/Typography'
 import { useAuth } from '@/context/AuthProvider'
-import useSubmitData from '@/hooks/useSubmitData'
+import { submitData } from '@/utils/submitData'
 import React from 'react'
 import { AiOutlineLoading } from 'react-icons/ai'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-
 export default function Register() {
-    // const [loading, setLoading] = React.useState(false)
-    const {loading, submitData, error, response} = useSubmitData()
+    const [loading, setLoading] = React.useState(false)
+    const [error, setError] = React.useState(null);
     const navigate = useNavigate()
     const [input, setInput] = React.useState({})
     const handleOnChange = (field, value) => {
@@ -21,20 +20,20 @@ export default function Register() {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${auth.token}`,
     }
-    React.useEffect(()=>{
-        if(response){
-            navigate('/login')
-        }
-        if(error){
-            console.log(error.errors);
-        }
-    },[error,response])
-    const handleSubmit = (e) =>{
+    const handleSubmit =  async (e) =>{
         e.preventDefault()
-        console.log(input);
-        submitData('register', input, headers)
+        try {
+            setLoading(true)
+            await submitData('register',input, headers)
+            navigate('/login')
+        } catch (err) {
+            setError(err.response ? err.response.data : { message: "Network Error" });
+            console.log(error.errors);
+        } 
+        finally {
+            setLoading(false);
+        }
     }
-    
     
     if(auth.token) {return <Navigate to="/booking" />}
     return (
@@ -42,7 +41,7 @@ export default function Register() {
             onSubmit={handleSubmit}
             className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 flex border rounded-3xl p-10 bg-bg min-w-[500px] max-w-[500px]  mx-auto flex-col">
             <CombinationLogo className={`mx-auto h-8 mb-5`} />
-            <div className='space-y-3'>
+            <div className='space-y-5'>
                 <InputWithLabel variant={error?.errors?.name ? 'danger':'default'} message={error?.errors?.name} label="Name" name={'name'} className={`w-full`} onChange={(e)=>handleOnChange("name", e.target.value)}/>
                 <InputWithLabel variant={error?.errors?.email ? 'danger':'default'} message={error?.errors?.email} label="Email Address" name={'email'} className={`w-full`} onChange={(e)=>handleOnChange("email", e.target.value)}/>
                 <InputWithLabel variant={error?.errors?.password ? 'danger':'default'} message={error?.errors?.password} type="password" label="Password" name={'password'} className={`w-full`} onChange={(e)=>handleOnChange("password", e.target.value)}/>

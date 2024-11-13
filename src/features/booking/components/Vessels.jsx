@@ -15,7 +15,7 @@ export default function Vessels({ props }) {
       {data ? (
         data.map((vessel) => (
           <label
-            className={`relative grow flex-col flex items-center justify-center h-40 w-44 cursor-pointer rounded-md border transition-colors duration-300 ${isActive(
+            className={`hover:shadow-md relative grow flex-col flex items-center justify-center h-40 w-44 cursor-pointer rounded-md border transition-colors duration-300 ${isActive(
                 value.data?.vessel_id || null,
                 vessel.id
             )}`}
