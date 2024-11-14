@@ -7,6 +7,9 @@ export default defineConfig({
   define: {
     'process.env': {}
   },
+  server: {
+    port: 5174,
+  },
   resolve:{
     alias: {
       "@": path.resolve(__dirname, "./src"),

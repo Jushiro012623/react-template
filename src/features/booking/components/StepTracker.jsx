@@ -4,12 +4,11 @@ import Typography from '../../../components/ui/Typography';
 
 const StepTracker = ({props}) => {
     const { state, stepDetails } = props
-
     const stateClass = (state, detail) =>{
         if(state.step > detail.id || state.status === 'complete'){
-            return 'bg-stepCompleted text-white'
+            return 'bg-sky-400 text-white'
         }else if (state.step === detail.id){
-            return 'bg-stepActive text-white'
+            return 'bg-sky-400 text-white'
         }else{
             return 'bg-transparent  text-gray-400'
         }

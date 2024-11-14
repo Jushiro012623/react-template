@@ -11,7 +11,7 @@ export default function ShipRoutes({ props }) {
             <label
               key={route.id}
               className={`hover:shadow-md border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300 ${isActive(
-                selectedRoute.id || value.data?.route_id,
+                selectedRoute?.id || value.data?.route_id,
                 route.id
               )}`}>
               <input
@@ -22,12 +22,12 @@ export default function ShipRoutes({ props }) {
                 onChange={() =>
                   setSelectedRoute({
                     id: route.id,
-                    origin: route.routes.origin,
-                    destination: route.routes.destination,
+                    origin: route.origin,
+                    destination: route.destination,
                     type: route.transportationType,
                   })
                 }
-                checked={selectedRoute.id === route.id}
+                checked={selectedRoute?.id === route.id}
               />
 
               <Typography
@@ -40,7 +40,7 @@ export default function ShipRoutes({ props }) {
                 {route.transportationType}
               </Typography>
               <Typography variant="info" color="gray" className={`relative uppercase font-medium tracking-wide w-full justify-between px-10 flex items-center gap-x-3`}>
-                {route.routes.origin} <IoIosArrowRoundForward size={20} className="absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2" /> {route.routes.destination}
+                {route?.origin} <IoIosArrowRoundForward size={20} className="absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2" /> {route?.destination}
               </Typography>
             </label>
           ))

@@ -34,7 +34,7 @@ export default function ThirdStep() {
           </div>
         ))} */}
         
-        <Typography variant='h6' className={`text-gray-600 capitalize `}>Basic Information</Typography>
+        <Typography variant='small1' color='primary' className={` uppercase col-span-3 `}>Basic Information</Typography>
         <span className="block h-[2px] border-dotted w-full border-b-2 border-gray-300 col-span-4"></span>
         <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-5 col-span-2 `}>
           <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">Name</Typography>
@@ -42,9 +42,9 @@ export default function ThirdStep() {
         </div>
         <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-5 col-span-2 `}>
           <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">Email</Typography>
-          <Typography variant='small2' className={`text-gray-600 capitalize `}>{user_?.email || '' }</Typography>
+          <Typography variant='small2' className={`text-gray-600 lowercase`}>{user_?.email || '' }</Typography>
         </div>
-        <Typography variant='h6' className={`text-gray-600 capitalize mt-2`}>Book Details</Typography>
+        <Typography variant='small1' color='primary' className={` col-span-3 mt-2 uppercase`}>Booking Details</Typography>
         <span className="block h-[2px] border-dotted w-full border-b-2 border-gray-300 col-span-4"></span>
         {(() => {
             switch (value.data?.type_id) {

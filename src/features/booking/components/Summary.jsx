@@ -1,8 +1,9 @@
+import MiniLoader from "@/components/ui/MiniLoader";
 import Typography from "@/components/ui/Typography";
 import { formatToPeso } from "@/utils/tripBookingUtils";
 import React from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
-export default function Summary({ value }) {
+export default function Summary({ value, loading }) {
   const fare = parseFloat(value.discount?.data?.fare?.fare) || 0.00
   , additionalFee = parseFloat(value.discount?.data?.fare?.additional_fee) || 0.00
   , discountApplied = value.discount?.data?.discount?.name || 'REGULAR'
@@ -15,6 +16,7 @@ export default function Summary({ value }) {
   , totalAmount = totalBeforeDiscount - discountAmount + amountOff
   return (
     <div className="relative mx-auto w-[400px]  p-10 border rounded-xl bg-white">
+      {loading && <MiniLoader className={`absolute w-full h-full top-0 left-0 bg-white rounded-3xl `}/>  } 
       <Typography variant="h4" className={``}>
         Summary
       </Typography>
@@ -70,7 +72,7 @@ export default function Summary({ value }) {
       <SummaryContentText arrowVisible={false} value={formatToPeso(totalBeforeDiscount)} name="Total" className="font-bold " childClass={`capitalize text-blue-400`}/>
       <span className="block h-[2px] border-dotted w-full border-b-2 border-gray-300 mt-4"></span>
       <SummaryContentText value={discountApplied} name="Discount Applied" childClass={`capitalize`}/>
-      <SummaryContentText value={` - ${formatToPeso(discountAmount)}`} name="Amount Off" childClass={`capitalize`}/>
+      <SummaryContentText value={` - ${formatToPeso(discountAmount)} `} name="Amount Off" childClass={`capitalize`}/>
       <span className="block h-[2px] border-dotted w-full border-b-2 border-gray-300 mt-4"></span>
       <SummaryContentText arrowVisible={false} value={formatToPeso(totalAmount)} name="Total Amount" className="font-bold" childClass={`!text-[14px] text-blue-400 font-bold`}/>
 

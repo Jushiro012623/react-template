@@ -27,12 +27,19 @@ export default function ChooseRouteModal({ props }) {
     description: null,
     type: null,
   }
-  const [selectedRoute, setSelectedRoute] = React.useState(intialRouteValue);
+  // const [selectedRoute, setSelectedRoute] = React.useState(intialRouteValue);
+  // Persist selectedRoute and avoid resetting to null on re-renders
+  const [selectedRoute, setSelectedRoute] = React.useState(value.details.route || intialRouteValue);
+  
   const handleClose = () => {
     setIsOpen(false);
     setSelectedRoute(intialRouteValue);
-    console.log(selectedRoute);
   };
+  React.useEffect(() => {
+    if (isOpen && !selectedRoute.id && value.details.route?.id) {
+      setSelectedRoute(value.details.route);  // If modal opens, preserve the previously selected route.
+    }
+  }, [isOpen, value.details.route, selectedRoute.id]);
   return (
     <React.Fragment>
       <div
@@ -87,13 +94,14 @@ export default function ChooseRouteModal({ props }) {
                 type="button"
                 className={`w-full`}
                 onClick={() => {
-                  setValue((prevState) => ({
-                    ...prevState,
-                    data: { ...prevState.data, route_id: selectedRoute.id },
-                    details: { ...prevState.details, route: selectedRoute },
-                  }));
+                  if (selectedRoute.id !== value.data?.route_id) {
+                    setValue((prevState) => ({
+                      ...prevState,
+                      data: { ...prevState.data, route_id: selectedRoute.id },
+                      details: { ...prevState.details, route: selectedRoute },
+                    }));
+                  }
                   setIsOpen(false);
-                  console.log(value);
                   value.data?.vessel_id ? dispatch({ type: "NEXT" }) : null ;
 
                 }}

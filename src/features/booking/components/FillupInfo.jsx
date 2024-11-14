@@ -14,29 +14,17 @@ export default function FillupInfo({ props }) {
   const [initialValue, setInitialValue] = React.useState({});
   const form = isFormValid(option, value, initialValue)
   const user = useAuth()
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${user.token}`,
-  }
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-      try{
-        const res = await submitData('fare/transactionFare', {
-          'discount_id': parseInt(initialValue.discount_id),
-          'type_id': value.data?.type_id,
-          'route_id': value.data?.route_id,
-          'weight': initialValue.weight || {}
-        }, headers)
-        setValue((prevState) => ({
-          ...prevState,
-          data: { ...prevState.data, ...initialValue,  },
-          discount : res.data
-        }));
-        setIsOpen(false);
-        dispatch({ type: "NEXT" });
-      }catch (err) {
-        console.error(err);
-      }
+      setValue((prevState) => ({
+        ...prevState,
+        data: { ...prevState.data, ...initialValue, type_id: option }, 
+        discount : {
+          type: 'discount',
+        }
+      }));
+      setIsOpen(false);
+      dispatch({ type: "NEXT" });
   }
   React.useEffect(() => {
       setIsDisable( Boolean(!form) );

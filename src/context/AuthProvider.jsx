@@ -20,12 +20,12 @@ const AuthProvider = ({ children }) => {
     fetchUser()
   },[token, user])
 
-  const useGetUser = async (_token) => {
+  const useGetUser = async (access_token) => {
 	await axios(`${APP}/user`, {
 		method: "GET",
 		headers: {
 				"Content-Type": "application/json",
-				'Authorization': `Bearer ${_token}`,
+				'Authorization': `Bearer ${access_token}`,
 		},
 	}).then((res) => {
 		const user = res.data
@@ -35,6 +35,11 @@ const AuthProvider = ({ children }) => {
 		// sessionStorage.setItem("name",user.name);
 		// sessionStorage.setItem("email",user.email);
 	}).catch((err) => {
+        // console.log(err.status);
+        if(err.status === 401){
+            removeCookie("token");
+            throw new Error("Unauthorized")
+        }
 		throw err;
 	})
   }
@@ -46,23 +51,9 @@ const AuthProvider = ({ children }) => {
         },
         data: JSON.stringify(data),
       }).then(async (res) => {
-        const _token =  res.data.data.token
-		useGetUser(_token)
-		// await axios(`${APP}/user`, {
-		// 	method: "GET",
-		// 	headers: {
-		// 			"Content-Type": "application/json",
-		// 			'Authorization': `Bearer ${_token}`,
-		// 	},
-		// }).then((res) => {
-		// 	const user = res.data
-		// 	setUser(user);
-		// 	localStorage.setItem("name",user.name);
-		// 	localStorage.setItem("email",user.email);
-		// }).catch((err) => {
-		// 	throw err;
-		// })
-        setCookie("token", await _token, { path: '/' })
+        const access_token =  res.data.data.access_token
+		useGetUser(access_token)
+        setCookie("token", await access_token, { path: '/' })
       }).catch((err) => {
 		removeCookie("token");
         throw err;

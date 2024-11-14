@@ -11,6 +11,10 @@ export default {
           "0%": { transform: "translateY(-10px)", opacity: "0" },
           "100%": { transform: "translateY(0px)", opacity: "1" },
         },
+        next: {
+          "0%": { transform: "translate(100%, -50%)", opacity: "0" },
+          "100%": { transform: "translate(0, 0)", opacity: "1" },
+        },
         appear:{
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
@@ -35,6 +39,7 @@ export default {
 
       animation: {
         dropShow: "dropShow .2s linear forwards",
+        next: "next .2s linear forwards",
         rotateHide: "rotateShow .3s ease forwards",
         rotateShow: "rotateShow .3s ease forwards",
         appear: "appear .2s linear forwards",
@@ -48,21 +53,21 @@ export default {
       },
       colors:{
         bg:{
-          DEFAULT: '#F5F5F5'
+          DEFAULT: '#f4f4f5'
         },
-        primary: '#4A90E2',         // Primary Color (Blue)
+        primary: '#0284c7',         // Primary Color (Blue)
         accent: '#5B8FF9',     
-        stepCompleted: '#8BC34A',
-        stepActive: '#4CAF50',      // Step Indicator Active Color (Green)
+        stepCompleted: '#059669',
+        stepActive: '#0891b2',      // Step Indicator Active Color (Green)
         background: '#F9F9F9',      // Background Color (Light Gray)
-        formBackground: '#FFFFFF',  // Form Background (White)
-        inputBorder: '#D1D5DB',     // Input Border Color (Light Gray)
-        textPrimary: '#333333',     // Text Color (Primary, Dark Gray)
-        textSecondary: '#6B6B6B',   // Text Color (Secondary, Medium Gray)
-        error: '#F44336',           // Error Color (Red)
-        warning: '#FF9800',         // Warning Color (Orange)
-        success: '#8BC34A',         // Success Color (Green)
-        subtleAccent: '#9C27B0',    // Subtle Accent Color (Purple)
+        formBackground: '#f4f4f5',  // Form Background (White)
+        inputBorder: '#d1d5db',     // Input Border Color (Light Gray)
+        textPrimary: '#1e293b',     // Text Color (Primary, Dark Gray)
+        textSecondary: '#6b7280',   // Text Color (Secondary, Medium Gray)
+        error: '#dc2626',           // Error Color (Red)
+        warning: '#ca8a04',         // Warning Color (Orange)
+        success: '#059669',         // Success Color (Green)
+        subtleAccent: '#4f46e5',    // Subtle Accent Color (Purple)
         lightAccent: '#E1F5FE', 
       }
     },

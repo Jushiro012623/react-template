@@ -9,14 +9,15 @@ import FillupInfo from "./FillupInfo";
 export default function SecondStepOptions() {
   const [isOpen, setIsOpen] = React.useState();
   const { value, setValue } = React.useContext(MultiStepper);
-  
+  const [initialValue, setInitialValue] = React.useState()
   const rideOptions = [
     { id: 1, icon: <FaUserAlt size={35} />, name: "Passenger" },
     { id: 2, icon: <GiCarWheel size={35} />, name: "Rolling Cargo" },
     { id: 3, icon: <PiShippingContainerFill size={35} />, name: "Drop Caro" },
   ];
+
   return (
-    <div>
+    <div className="">
       <Typography variant="h3">How do you plan to ride with us?</Typography>
       <Typography variant="small" className={`mt-2 mb-7`}>
         Please choose and fill the fields below .
@@ -34,9 +35,9 @@ export default function SecondStepOptions() {
               name="option"
               value={option.id}
               className="hidden"
-              onClick={()=> setIsOpen(true)}
+              onClick={()=> {setIsOpen(true); setInitialValue(option.id)}}
               onChange={() => {
-                setValue((prevState) => ({ ...prevState, data: {...prevState.data, type_id: option.id }}));
+                // setValue((prevState) => ({ ...prevState, data: {...prevState.data,  }}));
                 setIsOpen(true);
               }}
               checked={value.data?.type_id === option.id}
@@ -48,7 +49,7 @@ export default function SecondStepOptions() {
           </label>
         ))}
       </div>
-      <FillupInfo props={{ isOpen, option: value.data?.type_id, setIsOpen}} />
+      <FillupInfo props={{ isOpen, option: initialValue, setIsOpen}} />
     </div>
   );
 }
