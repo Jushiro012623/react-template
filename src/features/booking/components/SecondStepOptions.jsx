@@ -11,12 +11,11 @@ export default function SecondStepOptions({}) {
   const [isOpen, setIsOpen] = React.useState();
   const { value } = React.useContext(MultiStepper);
   const [initialValue, setInitialValue] = React.useState()
-  const rideOptions = [
-    { id: 1, icon: <FaUserAlt size={35} />, name: "Passenger" },
-    { id: 2, icon: <GiCarWheel size={35} />, name: "Rolling Cargo" },
-    { id: 3, icon: <PiShippingContainerFill size={35} />, name: "Drop Caro" },
-  ];
-
+    const rideOptions = [
+        { id: 1, icon: <FaUserAlt size={35} />, name: "Passenger" },
+        { id: 2, icon: <GiCarWheel size={35} />, name: "Rolling Cargo" },
+        { id: 3, icon: <PiShippingContainerFill size={35} />, name: "Drop Caro" },
+    ];
   return (
     <div className="">
       <Typography variant="h3">How do you plan to ride with us?</Typography>
@@ -31,21 +30,14 @@ export default function SecondStepOptions({}) {
               option.id
             )}`}
             key={option.id}>
-            <input
-              type="radio"
-              name="option"
-              value={option.id}
-              className="hidden"
-              onClick={()=> {setIsOpen(true); setInitialValue(option.id)}}
+            <input type="radio" name="option" value={option.id} className="hidden" onClick={()=> {setIsOpen(true); setInitialValue(option.id)}}
               onChange={() => {
                 setIsOpen(true);
               }}
               checked={value.data?.type_id === option.id}
             />
             <i>{option.icon}</i>
-            <Typography variant="small3" className={`mt-2`}>
-              {option.name}
-            </Typography>
+            <Typography variant="small3" className={`mt-2`}> {option.name} </Typography>
           </label>
         ))}
       </div>

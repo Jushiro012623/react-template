@@ -5,11 +5,10 @@ import { GiShipWheel, GiInterceptorShip, GiCargoShip } from "react-icons/gi";
 export default function Vessels({ props }) {
   const { data, setValue, value, setIsOpen } = props;
   const icons = [
-    <GiShipWheel size={40} />,
-    <GiInterceptorShip size={40} />,
-    <GiCargoShip size={40} />,
+        <GiShipWheel size={40} />,
+        <GiInterceptorShip size={40} />,
+        <GiCargoShip size={40} />,
   ];
-  
   return (
     <div className="flex gap-5">
       {data ? (
@@ -20,11 +19,7 @@ export default function Vessels({ props }) {
                 vessel.id
             )}`}
             key={vessel.id}>
-            <input
-                type="radio"
-                name="vessel"
-                value={vessel.id}
-                className="hidden"
+            <input type="radio" name="vessel" value={vessel.id} className="hidden"
                 onChange={() => {
                     setValue((prevState) => ({
                     ...prevState,
@@ -38,10 +33,10 @@ export default function Vessels({ props }) {
 
             <Typography>{icons[vessel.id - 1]}</Typography>
             <Typography className="mt-3" variant="small3">
-              {vessel.attributes.name}
+                {vessel.attributes.name}
             </Typography>
             <Typography variant="info">
-              {vessel.attributes.description}
+                {vessel.attributes.description}
             </Typography>
           </label>
         ))

@@ -17,21 +17,16 @@ export default function FillupInfo({ props }) {
   const { data } = useDataFetcher("weight", null, headers);
   const handleSubmit = (event) => {
     event.preventDefault();
-    
     setValue((prevState) => ({
         ...prevState,
         data: { ...prevState.data, ...initialValue, type_id: option }, 
-        discount : { 
-        type: 'discount',
-        },
+        discount : { type: 'discount',},
     }));
     setIsOpen(false);
     dispatch({ type: "NEXT" });
-    console.log(value);
   }
   React.useEffect(() => {
       setIsDisable( Boolean(!form) );
-      console.log( Boolean(!form));
   }, [value]);
   return (
     <React.Fragment>
@@ -238,7 +233,6 @@ const Selects = ({ name, value, data, state, setInitialValue, initialValue}) => 
           [state]: event.target.value,
         }));
         console.log(initialValue);
-        
     };
     return (
       <div className="relative">

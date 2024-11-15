@@ -7,17 +7,15 @@ import MiniLoader from "@/components/ui/MiniLoader";
 import { IoIosArrowRoundForward } from "react-icons/io";
 
 const FirstStepOptions = ({props}) => {
-    const [isOpen, setIsOpen] = React.useState()
     const { data } = props
+    const [isOpen, setIsOpen] = React.useState()
     const { setValue, value, setIsDisable } = React.useContext(MultiStepper)
     React.useEffect(() => {
         const isRouteIdValid = Boolean(value.data?.route_id);
         const isVesselIdValid = Boolean(value.data?.vessel_id);
         setIsDisable(!(isRouteIdValid && isVesselIdValid));
     }, [value]);
-    if(!data){
-        return <MiniLoader className={`min-h-[405px]`} color={`#6a6a6a`}/>
-    }
+    if( !data) return <MiniLoader className={`min-h-[405px]`} color={`#6a6a6a`}/>;
     return (
         <div className="mb-5 "> 
             <Typography variant="h3">Let's get started</Typography>
@@ -33,15 +31,10 @@ const FirstStepOptions = ({props}) => {
                                 <div className="flex items-center justify-center gap-x-3">
                                     <Typography
                                         variant="span"
-                                        className={`text-[11px] uppercase font-bold w-10 text-center ${
-                                            value.details.route.type === "out"
-                                            ? "text-red-600 "
-                                            : "text-teal-500"
-                                        }`}>
+                                        className={`text-[11px] uppercase font-bold w-10 text-center ${ value.details.route.type === "out" ? "text-red-600 " : "text-teal-500" }`}>
                                         {value.details.route.type}
                                     </Typography>
                                     <Typography variant="info" color="gray" className={`relative uppercase font-medium tracking-wide  justify-between flex items-center gap-x-3`}>{value.details.route.origin} <IoIosArrowRoundForward size={20}  /> {value.details.route.destination}</Typography>
-                                    
                                 </div>
                             }
                         </Typography>

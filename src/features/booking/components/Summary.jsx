@@ -1,20 +1,11 @@
 import MiniLoader from "@/components/ui/MiniLoader";
 import Typography from "@/components/ui/Typography";
-import { formatToPeso } from "@/utils/tripBookingUtils";
+import { formatToPeso, TRANSACTION_SUMMARY } from "@/utils/tripBookingUtils";
 import React from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
 export default function Summary({ value, loading }) {
-  const fare = parseFloat(value.discount?.data?.fare?.fare) || 0.00
-  , additionalFee = parseFloat(value.discount?.data?.fare?.additional_fee) || 0.00
-  , discountApplied = value.discount?.data?.discount?.name || 'REGULAR'
-  , amountOff = parseFloat(value.discount?.data?.discount?.deduction) || 0.00
-  , type = value.data.type_id === 1 ? 'Passenger' : (value.data.type_id === 2 ? 'Rolling Cargo' : (value.data.type_id === 3 ? 'Drop Cargo' : 'N/a'))
-  , accomodation = value.data?.additional && value.data?.type_id === 1 ? (value.data?.additional == 1 ? 'AIRCONDITIONED' : 'BASIC') : "n/a"
-  , vessel = value.details.vessel_name ? value.details.vessel_name : "n/a"
-  , totalBeforeDiscount = fare + additionalFee
-  , discountAmount = totalBeforeDiscount * amountOff
-  , totalAmount = totalBeforeDiscount - discountAmount + amountOff
-  return (
+    const {fare ,additionalFee ,discountApplied ,amountOff ,type ,accomodation ,vessel ,totalBeforeDiscount ,discountAmount ,totalAmount } = TRANSACTION_SUMMARY(value)
+    return (
     <div className="relative mx-auto w-[400px]  p-10 border rounded-xl bg-white">
       {loading && <MiniLoader className={`absolute w-full h-full top-0 left-0 bg-white rounded-3xl `}/>  } 
       <Typography variant="h4" className={``}>
