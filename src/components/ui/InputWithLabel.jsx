@@ -3,15 +3,17 @@ import { variants } from './BasicInput';
 import clsx from 'clsx';
 import Typography from './Typography';
 export default function InputWithLabel({
+
     variant = "default",
     name,
     label,
     message,
     className,
     onChange = () => {},
-    // value = '',
+    value = '',
     ...props
   }) {
+    
     const variantClass = variants[variant] || variants.default;
     return (
       <div>

@@ -6,9 +6,10 @@ import { FaUserAlt } from "react-icons/fa";
 import { GiCarWheel, GiCargoCrate } from "react-icons/gi";
 import { PiShippingContainerFill } from "react-icons/pi";
 import FillupInfo from "./FillupInfo";
-export default function SecondStepOptions() {
+export default function SecondStepOptions({}) {
+    
   const [isOpen, setIsOpen] = React.useState();
-  const { value, setValue } = React.useContext(MultiStepper);
+  const { value } = React.useContext(MultiStepper);
   const [initialValue, setInitialValue] = React.useState()
   const rideOptions = [
     { id: 1, icon: <FaUserAlt size={35} />, name: "Passenger" },
@@ -37,7 +38,6 @@ export default function SecondStepOptions() {
               className="hidden"
               onClick={()=> {setIsOpen(true); setInitialValue(option.id)}}
               onChange={() => {
-                // setValue((prevState) => ({ ...prevState, data: {...prevState.data,  }}));
                 setIsOpen(true);
               }}
               checked={value.data?.type_id === option.id}
@@ -49,7 +49,8 @@ export default function SecondStepOptions() {
           </label>
         ))}
       </div>
-      <FillupInfo props={{ isOpen, option: initialValue, setIsOpen}} />
+      <FillupInfo props={{ isOpen, option: initialValue, setIsOpen
+      }} />
     </div>
   );
 }

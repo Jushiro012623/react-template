@@ -19,21 +19,6 @@ export default function ThirdStep() {
           Please take a moment to review and confirm your ticket details.
         </Typography>
         <div className='mt-10 grid grid-cols-4 gap-4 mb-7'>
-        {/* {[
-          { customStyle: 'col-span-2 capitalize', label: 'Origin', value: value.details.route.origin },
-          { customStyle: 'col-span-2 capitalize', label: 'Destination', value: value.details.route.destination },
-          { customStyle: 'col-span-1 capitalize', label: 'Vessel Name', value:value.details.vessel_name },
-          { customStyle: 'col-span-2 capitalize', label: 'Ride Type', value: value.data.type_id === 1 ? 'Passenger' : (value.data.type_id === 2 ? 'Rolling Cargo' : 'Drop Cargo') },
-          { customStyle: 'col-span-1 capitalize', label: 'Route Type', value: value.details.route.type },
-          { customStyle: 'col-span-2 lowecase', label: 'Email', value: user_?.email || '' },
-          { customStyle: 'col-span-2 capitalize', label: 'Name', value: user_?.name || ''},
-        ].map((item, index) => (
-          <div key={index} className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 ${item.customStyle}`}>
-            <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1 min-h-11">{item.label}</Typography>
-            <Typography variant='small2' className={`text-gray-600 `}>{item.value}</Typography>
-          </div>
-        ))} */}
-        
         <Typography variant='small1' color='primary' className={` uppercase col-span-3 `}>Basic Information</Typography>
         <span className="block h-[2px] border-dotted w-full border-b-2 border-gray-300 col-span-4"></span>
         <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-5 col-span-2 `}>
@@ -74,7 +59,7 @@ export default function ThirdStep() {
                     </div>
                     <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 col-span-2 `}>
                       <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">Weight/KG</Typography>
-                      <Typography variant='small2' className={`text-gray-600 capitalize `}>{value.data?.weight}</Typography>
+                      <Typography variant='small2' className={`text-gray-600 capitalize `}>{value.data?.weight_id}</Typography>
                     </div>
                   </>
                   // <RollingCargo props={{ initialValue, setInitialValue, value }} />
@@ -96,7 +81,7 @@ export default function ThirdStep() {
                     </div>
                     <div className={`relative border rounded-md p-4 bg-white transition-transform transform mt-4 col-span-1 `}>
                       <Typography variant='small2' className="absolute top-0 -translate-y-5 left-0 font-semibold text-gray-700 mb-1">Weight/KG</Typography>
-                      <Typography variant='small2' className={`text-gray-600 capitalize `}>{value.data?.weight}</Typography>
+                      <Typography variant='small2' className={`text-gray-600 capitalize `}>{value.data?.weight_id}</Typography>
                     </div>
                   </>
                   // <DropCargo props={{ initialValue, setInitialValue, value }} />

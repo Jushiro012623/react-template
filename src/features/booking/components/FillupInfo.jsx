@@ -8,23 +8,26 @@ import InputWithLabel from "@/components/ui/InputWithLabel";
 import { isFormValid } from "@/utils/tripBookingUtils";
 import { submitData } from "@/utils/submitData";
 import { useAuth } from "@/context/AuthProvider";
+import useDataFetcher from "@/hooks/useDataFetcher";
 export default function FillupInfo({ props }) {
   const { isOpen, option, setIsOpen } = props;
-  const { setValue, value, dispatch, setIsDisable } = React.useContext(MultiStepper);
+  const { setValue, value, dispatch, setIsDisable, headers } = React.useContext(MultiStepper);
   const [initialValue, setInitialValue] = React.useState({});
   const form = isFormValid(option, value, initialValue)
-  const user = useAuth()
+  const { data } = useDataFetcher("weight", null, headers);
   const handleSubmit = (event) => {
     event.preventDefault();
-      setValue((prevState) => ({
+    
+    setValue((prevState) => ({
         ...prevState,
         data: { ...prevState.data, ...initialValue, type_id: option }, 
-        discount : {
-          type: 'discount',
-        }
-      }));
-      setIsOpen(false);
-      dispatch({ type: "NEXT" });
+        discount : { 
+        type: 'discount',
+        },
+    }));
+    setIsOpen(false);
+    dispatch({ type: "NEXT" });
+    console.log(value);
   }
   React.useEffect(() => {
       setIsDisable( Boolean(!form) );
@@ -54,11 +57,11 @@ export default function FillupInfo({ props }) {
                   );
                 case 2:
                   return (
-                    <RollingCargo props={{ initialValue, setInitialValue, value }} />
+                    <RollingCargo props={{ initialValue, setInitialValue, value, data }} />
                   );
                 case 3:
                   return (
-                    <DropCargo props={{ initialValue, setInitialValue, value }} />
+                    <DropCargo props={{ initialValue, setInitialValue, value,data }} />
                   );
                 default:
                   return <Typography variant="h2">Invalid Option</Typography>;
@@ -97,6 +100,16 @@ const Passenger = ({ props }) => {
       discount_id: event.target.value,
     }));
   };
+  const discountOptions = [
+      { name: 'Regular', value: 1},
+      { name: 'PWD/Senior', value: 2},
+      { name: 'Half Fare', value: 3},
+      { name: 'Minor', value: 4},
+    { name: 'Student', value: 5},
+  ], addOnsOptions = [
+    {name: 'Basic', value: 2},
+    {name: 'Airconditioned', value: 1},
+  ]
   return (
     <React.Fragment>
       <Typography variant="h4">Passenger</Typography>
@@ -109,47 +122,38 @@ const Passenger = ({ props }) => {
           id="discount_id"
           className="hover:shadow-md capitalize text-xs outline-none border w-full h-11 rounded-md px-4"
           onChange={handleChange}>
-          <option className="text-xs capitalize pointer-events-none">discount</option>
-          <option className={`text-xs ${ (initialValue.discount_id || value.data?.discount_id) === 'regular' ? 'bg-red-300' : null}`} value="1">
-            Regular
-          </option>
-          <option className={`text-xs ${value.data?.discount_id === 'student' ? 'bg-red-300' : null }`} value="5">
-            Student
-          </option>
-          <option className="text-xs" value="2">
-            PWD/Senior
-          </option>
-          <option className="text-xs" value="3">
-            Half Fare
-          </option>
-          <option className="text-xs" value="4">
-            Minor
-          </option>
+          <option className="text-xs capitalize pointer-events-none" >{discountOptions[(initialValue?.discount_id || value.data?.discount_id)]?.name || 'Discount' }</option>
+          {discountOptions.map((discount, index) => (
+            <option key={index} className={`text-xs`} value={discount.value}>
+                {discount.name}
+            </option>
+          ) ).sort()}
         </select>
         <IoIosArrowDown className="absolute right-3 top-1/2 pointer-events-none text-gray-600" />
       </div>
+      
       <Typography variant="small" className={`translate-y-1/2 mt-4 pl-1`}>
         Add Ons
       </Typography>
       <div className="flex gap-2 w-full">
-      <label
-        className={`hover:shadow-md grow min-w-[48%] border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300  ${ (initialValue.additional || value.data?.additional) === 1 ? 'border-indigo-400' : 'border-gray-200'  }`}>
+      {addOnsOptions.map((addons, index) => (<label key={index}
+        className={`hover:shadow-md grow min-w-[48%] border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300  ${ (initialValue.additional || value.data?.additional) === addons.value ? 'border-indigo-400' : 'border-gray-200'  }`}>
         <input
           type="radio"
           name="route"
-          value={1}
+          value={addons.value}
           className="hidden"
           onChange={() =>{
             // console.log((initialValue.additional || value.data?.additional) == 1, initialValue.additional || value.data?.additional, 0);
-            setInitialValue((prevState) => ({ ...prevState, additional: 1 }))}
+            setInitialValue((prevState) => ({ ...prevState, additional: addons.value }))}
           }
-          checked={initialValue.additional === 1}
+          checked={initialValue.additional === addons.value}
         />
           <Typography variant="small" className={`capitalize`}>
-            Airconditioned
+            {addons.name}
           </Typography>
-      </label>
-      <label
+      </label>))}
+      {/* <label
         className={`hover:shadow-md grow min-w-[48%] border h-12 px-5 mt-2 rounded-md cursor-pointer flex items-center gap-10 animate-appear transition-colors duration-300  ${ (initialValue.additional || value.data?.additional) === 2 ? 'border-indigo-400' : 'border-gray-200'  }`}>
         <input
           type="radio"
@@ -165,7 +169,7 @@ const Passenger = ({ props }) => {
           <Typography variant="small" className={`capitalize`}>
             Basic
           </Typography>
-      </label>
+      </label> */}
       
 
       </div>
@@ -173,33 +177,98 @@ const Passenger = ({ props }) => {
   );
 };
 const DropCargo = ({ props }) => {
-  const { initialValue, setInitialValue, value } = props;
+    const { initialValue, setInitialValue, value, data } = props;
   return (
     <React.Fragment>
       <Typography variant="h4">Drop Cargo</Typography>
       <div className="flex flex-col gap-3 mt-6 w-full">
+        <Selects 
+            name="Weight/Kg" 
+            value={value} 
+            data={data} 
+            state="weight_id" 
+            setInitialValue={setInitialValue}
+            initialValue={initialValue} 
+        />
         <InputValue label="Item Name" value={initialValue.item_name} setInitialValue={setInitialValue} state="item_name" />
         <InputValue label="Cargo Description" value={initialValue.cargo_description} setInitialValue={setInitialValue} state="cargo_description" />
         <InputValue type="number" label="Quantity" value={initialValue.quantity} setInitialValue={setInitialValue} state="quantity" />
-        <InputValue type="number" label="Weight/KG" value={initialValue.weight} setInitialValue={setInitialValue} state="weight" />
+
+        {/* <InputValue type="number" label="Weight/KG" value={initialValue.weight} setInitialValue={setInitialValue} state="weight" /> */}
       </div>
     </React.Fragment>
   );
 };
 const RollingCargo = ({ props }) => {
-  const { initialValue, setInitialValue, value } = props;
-  return (
-    <React.Fragment>
-      <Typography variant="h4">Rolling Cargo</Typography>
-      <div className="flex flex-col gap-3 mt-6 w-full">
-        <InputValue label="Vehicle Type" value={initialValue.vehicle_type} setInitialValue={setInitialValue} state="vehicle_type" />
-        <InputValue type="number" label="Weight/KG" value={initialValue.weight} setInitialValue={setInitialValue} state="weight" />
-        <InputValue label="Plate Number" value={initialValue.plate_number} setInitialValue={setInitialValue} state="plate_number" />
+    const { initialValue, setInitialValue, value, data } = props;
+  
+    return (
+      <React.Fragment>
+        <Typography variant="h4">Rolling Cargo</Typography>
+        <div className="flex flex-col gap-3 mt-6 w-full">
+          <Selects 
+            name="Weight/Kg" 
+            value={value} 
+            data={data} 
+            state="weight_id" 
+            setInitialValue={setInitialValue}
+            initialValue={initialValue}
+          />
+          <InputValue 
+            label="Vehicle Type" 
+            value={initialValue.vehicle_type} 
+            setInitialValue={setInitialValue} 
+            state="vehicle_type" 
+          />
+          <InputValue 
+            label="Plate Number" 
+            value={initialValue.plate_number} 
+            setInitialValue={setInitialValue} 
+            state="plate_number" 
+          />
+        </div>
+      </React.Fragment>
+    );
+  };
+  
+const Selects = ({ name, value, data, state, setInitialValue, initialValue}) => {
+    const handleChange = (event) => {
+        setInitialValue((prevState) => ({
+          ...prevState,
+          [state]: event.target.value,
+        }));
+        console.log(initialValue);
+        
+    };
+    return (
+      <div className="relative">
+        <Typography variant="small" className="pl-1">
+          {name}
+        </Typography>
+        <select
+          name={state}
+          id={state}
+          className="hover:shadow-md capitalize text-xs outline-none border w-full h-11 rounded-md px-4"
+          onChange={handleChange}
+        >
+          <option className="text-xs capitalize pointer-events-none">
+            {(value?.[state] || initialValue?.[state] || 'Select Option')}
+          </option>
+          {data?.map((data, index) => (
+            <option
+              key={index}
+              className={`text-xs`}
+              value={data.id} 
+            >
+              {data.name}
+            </option>
+          ))}
+        </select>
+        <IoIosArrowDown className="absolute right-3 top-1/2 pointer-events-none text-gray-600" />
       </div>
-    </React.Fragment>
-  );
-};
-
+    );
+  };
+  
 const InputValue = ({label, value, setInitialValue, state, type = "text"}) => {
   return <InputWithLabel
   className={`w-full hover:shadow-md focus:shadow-md `}
@@ -214,3 +283,4 @@ const InputValue = ({label, value, setInitialValue, state, type = "text"}) => {
   }
 />
 }
+

@@ -38,6 +38,7 @@ export default function TripBooking() {
           destination: null,
           id: null,
         },
+        weight: null,
       },
     }),
     navigate = useNavigate(),
@@ -58,13 +59,8 @@ export default function TripBooking() {
         });
     }, [value]);
   const { dispatch, state, maxStep } = useStepManager(stepDetails.length);
-    const {
-        data: vessels,
-        loading: vesselsLoading,
-        error: vesselsError,
-    } = useDataFetcher("vessel", null, headers);
+    const { data: vessels, loading: vesselsLoading, error: vesselsError } = useDataFetcher("vessel", null, headers);
     const [isDisable, setIsDisable] = React.useState(true);
-    console.log(value);
     
     React.useEffect(() => {
         if (value?.discount) {
@@ -77,13 +73,13 @@ export default function TripBooking() {
                 discount_id: parseInt(value.data?.discount_id),
                 type_id: value.data?.type_id,
                 route_id: value.data?.route_id,
-                weight: value.data?.weight || {}
+                weight_id: value.data?.weight_id || {}
                 },
                 headers
             );
             setValue((prevState) => ({
                 ...prevState,
-                discount: res.data
+                discount: res.data,
             }));
             } catch (err) {
             console.error(err);
@@ -109,7 +105,7 @@ export default function TripBooking() {
     };
   return (
     <MultiStepper.Provider
-      value={{ setValue, value, dispatch, state, setIsDisable, user_ }}>
+      value={{ setValue, value, dispatch, state, setIsDisable, user_, headers}}>
       <section className="w-full h-screen py-[120px] px-[5%]">
         <div className="relative flex border p-10 rounded-3xl bg-bg max-w-[1180px] mx-auto">
           {state.step !== 4 ? (
