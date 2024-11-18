@@ -16,7 +16,7 @@ import { useAuth } from "@/context/AuthProvider";
 import MiniLoader from "@/components/ui/MiniLoader";
 import Summary from "@/features/booking/components/Summary";
 import { submitData } from "@/utils/submitData";
-import { TRANSACTION_SUMMARY, VALUE_FORMAT } from "@/utils/tripBookingUtils";
+import { VALUE_FORMAT } from "@/utils/tripBookingUtils";
 
 export const MultiStepper = React.createContext();
 
@@ -42,7 +42,7 @@ export default function TripBooking() {
             [isDisable, setIsDisable] = React.useState(true),
             [loadingSummary, setLoadingSummary] = React.useState(false),
             [user_, serUser_] = React.useState({}),
-            [value, setValue] = React.useState(VALUE_FORMAT);
+            [value, setValue] = React.useState(VALUE_FORMAT)
     
     React.useEffect(() => {
         serUser_({
@@ -95,13 +95,13 @@ export default function TripBooking() {
     <MultiStepper.Provider
       value={{ setValue, value, dispatch, state, setIsDisable, user_, headers}}>
       <section className="w-full h-screen py-[120px] px-[5%]">
-        <div className="relative flex border p-10 rounded-3xl bg-bg max-w-[1180px] mx-auto">
-          { state.step !== 4 ? ( <Summary value={value} loading={loadingSummary} /> ) : ( "" ) }
+        <div className="relative flex  p-10 rounded-3xl max-w-[1180px] mx-auto bg-bg border">
+        { state.step === 3 ? ( <Summary value={value} loading={loadingSummary} /> ) : ( "" ) }
           <div className="mx-auto gap-[96px]">
             <StepTracker props={{ state, stepDetails, maxStep }} />
             <form
                 onSubmit={handleOnSubmit}
-                className={`ticket-form step-body mx-auto mt-24 px-10 pt-10 border bg-white rounded-xl flex flex-col select-none max-w-[652.11px] `}>
+                className={`ticket-form step-body mx-auto mt-24 px-10 pt-10  bg-white rounded-xl border flex flex-col select-none max-w-[652.11px] `}>
               {(() => {
                 switch (state.step) {
                   case 1:

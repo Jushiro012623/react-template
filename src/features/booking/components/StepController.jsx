@@ -1,11 +1,9 @@
 import React from 'react'
 import { FaArrowLeftLong,FaArrowRightLong  } from "react-icons/fa6";
 import Button from '../../../components/ui/Button';
-import { useNavigate } from 'react-router-dom';
  
 export default function StepController({ props }) {
     const {state, dispatch, maxStep, isDisable} = props
-    const navigate = useNavigate();
     // console.log(state);
     return (
         <div className={`step-buttons flex w-full border-t border-dashed py-8 ${state.step === 1 ? 'justify-end' : 'justify-between'}`}>
@@ -23,7 +21,6 @@ export default function StepController({ props }) {
                 onClick={() => {
                     if (state.step === maxStep) {
                         dispatch({ type: "COMPLETE" });
-                        // navigate('/login'); 
                     }else {
                         dispatch({ type: "NEXT" });
                     }

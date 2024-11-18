@@ -30,7 +30,15 @@ export const isFormValid = (option, value ,initialValue) => {
     } else if (option === 3) {
       return (value.data?.item_name && value.data?.cargo_description && value.data?.quantity && value.data?.weight_id ) || (initialValue.item_name && initialValue.cargo_description && initialValue.quantity && initialValue.weight_id);
     } else{
-      return value.data?.vehicle_type && value.data?.plate_number && value.data?.weight_id && value.data?.item_name && value.data?.cargo_description && value.data?.quantity && value.data?.additional && value.data?.discount_id
+        if(value.data?.type_id == 1){
+            return value.data?.additional && value.data?.discount_id
+        }else if(value.data?.type_id == 2){
+            return value.data?.vehicle_type && value.data?.plate_number && value.data?.weight_id;
+        }else if(value.data?.type_id == 3){
+            return value.data?.item_name && value.data?.cargo_description && value.data?.quantity && value.data?.weight_id 
+        }else{
+            return value.data?.vehicle_type && value.data?.plate_number && value.data?.weight_id && value.data?.item_name && value.data?.cargo_description && value.data?.quantity && value.data?.additional && value.data?.discount_id
+        }
     }
 };
 

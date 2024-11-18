@@ -53,9 +53,9 @@ export default {
       },
       colors:{
         bg:{
-          DEFAULT: '#f4f4f5'
+          DEFAULT: '#f6f6f6'
         },
-        primary: '#0284c7',         // Primary Color (Blue)
+        primary: '#0ea5e9',         // Primary Color (Blue)
         accent: '#5B8FF9',     
         stepCompleted: '#059669',
         stepActive: '#0891b2',      // Step Indicator Active Color (Green)

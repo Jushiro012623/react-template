@@ -1,11 +1,6 @@
-import Loader from '@/components/Loader';
 import Typography from '@/components/ui/Typography'
-import { useAuth } from '@/context/AuthProvider';
-import useDataFetcher from '@/hooks/useDataFetcher'
-import useGetUser from '@/hooks/useGetUser';
 import { MultiStepper } from '@/pages/TripBooking'
 import React from 'react'
-import { IoIosArrowRoundForward } from "react-icons/io";
 export default function ThirdStep() {
     const {setIsDisable, value, user_} = React.useContext(MultiStepper)
     React.useEffect(() => {
@@ -28,7 +23,7 @@ export default function ThirdStep() {
               case 1:
                 return (
                   <React.Fragment>
-                    <InputReview value={value.data?.additional === "true" ? 'Airconditioned' : 'Basic'} label={'Additional Fee'} />
+                    <InputReview value={value.data?.additional === "true" ? 'AIRCONDITIONED' : 'BASIC'} label={'Additional Fee'} />
                     <InputReview value={value.discount?.data?.discount?.name} label={'Discount'} />
                   </React.Fragment>
                 );

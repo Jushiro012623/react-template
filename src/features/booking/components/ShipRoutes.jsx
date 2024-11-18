@@ -34,13 +34,13 @@ export default function ShipRoutes({ props }) {
                 variant="span"
                 className={`text-[11px] uppercase font-bold w-10 text-center ${
                   route.transportationType === "out"
-                    ? "text-red-600 "
+                    ? "text-error "
                     : "text-teal-500"
                 }`}>
                 {route.transportationType}
               </Typography>
               <Typography variant="info" color="gray" className={`relative uppercase font-medium tracking-wide w-full justify-between px-10 flex items-center gap-x-3`}>
-                {route?.origin} <IoIosArrowRoundForward size={20} className="absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2" /> {route?.destination}
+                {route?.origin} <IoIosArrowRoundForward size={20} className="text-primary absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2" /> {route?.destination}
               </Typography>
             </label>
           ))
