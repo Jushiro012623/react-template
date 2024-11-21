@@ -1,10 +1,10 @@
 import Typography from "@/components/ui/Typography";
 import React from "react";
-import { MultiStepper } from "@/pages/TripBooking";
 import ChooseRouteModal from "./ChooseRouteModal";
 import Vessels from "./Vessels";
 import MiniLoader from "@/components/ui/MiniLoader";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { MultiStepper } from "@/context/MultiStepperProvider";
 
 const FirstStepOptions = ({props}) => {
     const { data } = props

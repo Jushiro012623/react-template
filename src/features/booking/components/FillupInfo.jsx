@@ -1,14 +1,12 @@
 import Button from "@/components/ui/Button";
 import Typography from "@/components/ui/Typography";
-import { MultiStepper } from "@/pages/TripBooking";
 import React from "react";
 import { RxCross2 } from "react-icons/rx";
 import { IoIosArrowDown } from "react-icons/io";
 import InputWithLabel from "@/components/ui/InputWithLabel";
 import { isFormValid } from "@/utils/tripBookingUtils";
-import { submitData } from "@/utils/submitData";
-import { useAuth } from "@/context/AuthProvider";
 import useDataFetcher from "@/hooks/useDataFetcher";
+import { MultiStepper } from "@/context/MultiStepperProvider";
 export default function FillupInfo({ props }) {
   const { isOpen, option, setIsOpen } = props;
   const { setValue, value, dispatch, setIsDisable, headers } = React.useContext(MultiStepper);

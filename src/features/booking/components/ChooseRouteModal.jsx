@@ -1,13 +1,12 @@
 import Button from "@/components/ui/Button";
 import Typography from "@/components/ui/Typography";
 import useDataFetcher from "@/hooks/useDataFetcher";
-import { MultiStepper } from "@/pages/TripBooking";
 import { isActive } from "@/utils/tripBookingUtils";
 import React from "react";
 import { RxCross2 } from "react-icons/rx";
 import ShipRoutes from "./ShipRoutes";
-import { useAuth } from "@/context/AuthProvider";
 import MiniLoader from "@/components/ui/MiniLoader";
+import { MultiStepper } from "@/context/MultiStepperProvider";
 export default function ChooseRouteModal({ props }) {
   const { isOpen, setIsOpen } = props;
   const { setValue, value, dispatch, headers } = React.useContext(MultiStepper);

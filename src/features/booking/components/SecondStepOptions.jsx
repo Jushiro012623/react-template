@@ -1,11 +1,11 @@
 import Typography from "@/components/ui/Typography";
-import { MultiStepper } from "@/pages/TripBooking";
 import { isActive } from "@/utils/tripBookingUtils";
 import React from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { GiCarWheel, GiCargoCrate } from "react-icons/gi";
 import { PiShippingContainerFill } from "react-icons/pi";
 import FillupInfo from "./FillupInfo";
+import { MultiStepper } from "@/context/MultiStepperProvider";
 export default function SecondStepOptions({}) {
     
   const [isOpen, setIsOpen] = React.useState();

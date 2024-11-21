@@ -1,5 +1,5 @@
 import Typography from '@/components/ui/Typography'
-import { MultiStepper } from '@/pages/TripBooking'
+import { MultiStepper } from '@/context/MultiStepperProvider';
 import React from 'react'
 export default function ThirdStep() {
     const {setIsDisable, value, user_} = React.useContext(MultiStepper)
