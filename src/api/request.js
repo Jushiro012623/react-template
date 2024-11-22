@@ -1,7 +1,6 @@
 import { useAuth } from "@/context/AuthProvider";
 import React from "react";
 
-const APP = process.env.APP || "http://127.0.0.1:8080/api"
 // const { token } = useAuth()
 const api = {};
 api.post = async ({url, data, auth = false}) =>{
@@ -9,7 +8,7 @@ api.post = async ({url, data, auth = false}) =>{
 
         const { token } = useAuth()
         // try {
-        axios(`${APP}/${url}`, {
+        axios(`${import.meta.env.VITE_API_URL}/${url}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

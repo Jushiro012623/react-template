@@ -2,10 +2,13 @@ import React, { useContext, createContext, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Navigate, useNavigate } from "react-router-dom";
 const AuthContext = createContext();
+
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState();
-    const [cookies, setCookie, removeCookie] = useCookies(['token']);
-    const [token, setToken] = useState(cookies.token);
+    const [cookies, setCookie, removeCookie] = useCookies(['_accessToken']);
+    const [token, setToken] = useState(cookies._accessToken);
+    
+    const memoizedToken = React.useMemo(() => token, [token]);
     // const navigate = useNavigate(); // useNavigate hook
     // const token = cookies.token || "";
     // React.useEffect(()=>{
@@ -21,18 +24,17 @@ const AuthProvider = ({ children }) => {
 
     const login = (access_token) => {
         setToken(access_token)
-        setCookie("token", access_token, { path: '/'})
+        setCookie("_accessToken", access_token, { path: '/'})
     };
 
     const logout = () => {
         setUser(null);
-        removeCookie("token")
+        removeCookie("_accessToken")
         // navigate('/')
-        return <Navigate to="/login" />
     };
 
     return (
-        <AuthContext.Provider value={{ token, user, login, logout }}>
+        <AuthContext.Provider value={{ token:memoizedToken, user, login, logout }}>
         {children}
         </AuthContext.Provider>
     );

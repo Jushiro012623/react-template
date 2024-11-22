@@ -4,7 +4,11 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '@/context/AuthProvider';
 
 export default function MainLayout() {
-  const {token} = useAuth();
+  const { token } = useAuth();
+  React.useEffect(() => {
+    console.log(token);
+    
+  },[token])
     return ( token ? <React.Fragment>
                         <Navbar />
                         <Outlet />

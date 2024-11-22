@@ -3,12 +3,13 @@ import Typography from '@/components/ui/Typography';
 import { MultiStepper } from '@/context/MultiStepperProvider';
 import React from 'react'
 import { FaCheck  } from "react-icons/fa";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 export default function BookingComplete() {
     const { state } = React.useContext(MultiStepper);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     if(state.status !== 'complete'){
-        return navigate('/booking')
+        // return navigate('/')
+        return <Navigate to="/"/>
     }
     return (
         <React.Fragment>

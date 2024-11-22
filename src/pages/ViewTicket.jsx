@@ -3,10 +3,10 @@ import { useAuth } from '@/context/AuthProvider'
 import useDataFetcher from '@/hooks/useDataFetcher'
 import React from 'react'
 export default function ViewTicket() {
-    const user = useAuth()
+    const {token} = useAuth()
     const headers = {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${user.token}`,
+    'Authorization': `Bearer ${token}`,
     }
     const { data, loading, error } = useDataFetcher('ticket', null, headers)
     return (

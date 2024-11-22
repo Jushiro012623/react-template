@@ -12,11 +12,11 @@ export default function MultiStepperProvider({children}) {
         { id: 3, icon: <IoBoat />, details: "Confirm" },
     ];
     
-    const user = useAuth();
+    const {token} = useAuth();
     const [user_, serUser_] = React.useState({})
     const  headers = {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${token}`,
     }
     const [isDisable, setIsDisable] = React.useState(true)
     const { dispatch, state, maxStep } = useStepManager(stepDetails.length)

@@ -16,10 +16,10 @@ const MainRouter = createBrowserRouter(
   createRoutesFromElements(
     <React.Fragment>
       <Route path='/' element={<MainLayout />}>
-        <Route path='booking'>
+        {/* <Route path='booking'> */}
           <Route index element={<TripBooking />} errorElement={<Loadable />} />  
           <Route path="complete" element={<BookingComplete />} errorElement={<Loadable />}/>
-        </Route>
+        {/* </Route> */}
         {/* <Route path='ticket' element={<ViewTicket />} errorElement={<Loadable />} /> */}
       </Route>
       <Route path='login' element={<Login />} errorElement={<Loadable />} />

@@ -10,6 +10,13 @@ const FirstStepOptions = ({props}) => {
     const { data } = props
     const [isOpen, setIsOpen] = React.useState()
     const { setValue, value, setIsDisable } = React.useContext(MultiStepper)
+    
+    const route = {
+        type: value.details.route.type,
+        destination: value.details.route.destination,
+        origin: value.details.route.origin,
+        id: value.details.route.id,
+    }
     React.useEffect(() => {
         const isRouteIdValid = Boolean(value.data?.route_id);
         const isVesselIdValid = Boolean(value.data?.vessel_id);
@@ -25,17 +32,19 @@ const FirstStepOptions = ({props}) => {
                 <React.Fragment>
                     <Typography variant="subheading2" className={`mt-7 mb-1`}>Choose your route</Typography>
                     <Typography variant="info">Lorem ipsum dolor sit amet consectetur.</Typography>
-                    <div className={`border h-10 mt-5 rounded-md flex items-center justify-center px-5 mb-3 cursor-pointer hover:shadow-md ${value.details.route.id === null ? 'border-gray-200' : 'border-indigo-400 ' }`} onClick={()=>setIsOpen(`${value.details.route.id === null  ? 'false' : 'true' }`)} >
+                    <div className={`border h-10 mt-5 rounded-md flex items-center justify-center px-5 mb-3 cursor-pointer hover:shadow-md ${route.id === null ? 'border-gray-200' : 'border-indigo-400 ' }`} onClick={()=>setIsOpen(`${route.id === null  ? 'false' : 'true' }`)} >
                         <Typography variant="small" className={`capitalize`} >
                             {value.details.route.id === null ?  'No Chosen Route' : 
-                                <div className="flex items-center justify-center gap-x-3">
+                                <span className="flex items-center justify-center gap-x-3">
                                     <Typography
                                         variant="span"
-                                        className={`text-[11px] uppercase font-bold w-10 text-center ${ value.details.route.type === "out" ? "text-red-600 " : "text-teal-500" }`}>
-                                        {value.details.route.type}
+                                        className={`text-[11px] uppercase font-bold w-10 text-center ${ route.type === "out" ? "text-red-600 " : "text-teal-500" }`}>
+                                        {route.type}
                                     </Typography>
-                                    <Typography variant="info" color="gray" className={`relative uppercase font-medium tracking-wide  justify-between flex items-center gap-x-3`}>{value.details.route.origin} <IoIosArrowRoundForward size={20}  /> {value.details.route.destination}</Typography>
-                                </div>
+                                    <span>
+                                        <Typography variant="span" color="gray" className={`text-[11px] relative uppercase font-medium tracking-wide  justify-between flex items-center gap-x-3`}>{route.origin} <IoIosArrowRoundForward size={20}  /> {route.destination}</Typography>
+                                    </span>
+                                </span>
                             }
                         </Typography>
                     </div>

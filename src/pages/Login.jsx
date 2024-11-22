@@ -9,7 +9,7 @@ import { AiOutlineLoading } from "react-icons/ai";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { useAuth } from "@/context/AuthProvider";
 import axios from "axios";
-const APP = process.env.APP || "http://127.0.0.1:8080/api";
+// const APP = process.env.APP || "http://127.0.0.1:8080/api";
 import api from "../api/request"
 export default function Login() {
     useDocumentTitle("Login");
@@ -25,7 +25,7 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-        const response = await axios(`${APP}/login`, {
+        const response = await axios(`${import.meta.env.VITE_API_URL}/login`, {
             method: "POST",
             headers: {
             "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export default function Login() {
     }
   };
   if (token) {
-    return <Navigate to="/booking" />;
+    return <Navigate to="/" />;
   }
   return (
     <section className="relative w-full h-screen py-[120px] px-[5%]">
