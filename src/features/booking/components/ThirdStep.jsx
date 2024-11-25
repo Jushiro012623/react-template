@@ -1,8 +1,10 @@
 import Typography from '@/components/ui/Typography'
-import { MultiStepper } from '@/context/MultiStepperProvider';
+import { useAuth } from '@/context/AuthProvider';
+import { MultiStepper, useMultiForm } from '@/context/MultiStepperProvider';
 import React from 'react'
 export default function ThirdStep() {
-    const {setIsDisable, value, user_} = React.useContext(MultiStepper)
+    const {setIsDisable, value} = useMultiForm()
+    const {user} = useAuth()
     React.useEffect(() => {
       setIsDisable(false);
     }, []);
@@ -14,8 +16,8 @@ export default function ThirdStep() {
         <div className='mt-10 grid grid-cols-4 gap-4 mb-7'>
         <Typography variant='small1' color='primary' className={` uppercase col-span-3 `}>Basic Information</Typography>
         <span className="block h-[2px] border-dotted w-full border-b-2 border-gray-300 col-span-4"></span>
-        <InputReview value={user_?.name || '' } label={'Name'} />
-        <InputReview value={user_?.email || ''  } label={'Email'} />
+        <InputReview value={user.name || '' } label={'Name'} />
+        <InputReview value={user.email || ''  } label={'Email'} />
         <Typography variant='small1' color='primary' className={` col-span-3 mt-2 uppercase`}>Booking Details</Typography>
         <span className="block h-[2px] border-dotted w-full border-b-2 border-gray-300 col-span-4"></span>
         {(() => {

@@ -29,3 +29,6 @@ export default function MultiStepperProvider({children}) {
     </MultiStepper.Provider>
     
 }
+export const useMultiForm = () => {
+    return React.useContext(MultiStepper)
+}

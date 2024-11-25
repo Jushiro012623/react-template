@@ -6,12 +6,12 @@ import React from "react";
 import { RxCross2 } from "react-icons/rx";
 import ShipRoutes from "./ShipRoutes";
 import MiniLoader from "@/components/ui/MiniLoader";
-import { MultiStepper } from "@/context/MultiStepperProvider";
+import { MultiStepper, useMultiForm } from "@/context/MultiStepperProvider";
 export default function ChooseRouteModal({ props }) {
   const { isOpen, setIsOpen } = props;
-  const { setValue, value, dispatch, headers } = React.useContext(MultiStepper);
+  const { setValue, value, dispatch } = useMultiForm()
   const [routeType, setRouteType] = React.useState(value.details.route?.type || 'out');
-  const { data: routes, loading } = useDataFetcher(`route?transportation_type=${routeType}`, null, headers);
+  const { data: routes, loading } = useDataFetcher(`/route?transportation_type=${routeType}`);
   const intialRouteValue = { id: null, description: null, type: null }
   const [selectedRoute, setSelectedRoute] = React.useState(value.details.route || intialRouteValue);
   const handleClose = () => {

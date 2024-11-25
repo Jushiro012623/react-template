@@ -6,13 +6,13 @@ import { IoIosArrowDown } from "react-icons/io";
 import InputWithLabel from "@/components/ui/InputWithLabel";
 import { isFormValid } from "@/utils/tripBookingUtils";
 import useDataFetcher from "@/hooks/useDataFetcher";
-import { MultiStepper } from "@/context/MultiStepperProvider";
+import { MultiStepper, useMultiForm } from "@/context/MultiStepperProvider";
 export default function FillupInfo({ props }) {
   const { isOpen, option, setIsOpen } = props;
-  const { setValue, value, dispatch, setIsDisable, headers } = React.useContext(MultiStepper);
+  const { setValue, value, dispatch, setIsDisable } = useMultiForm()
   const [initialValue, setInitialValue] = React.useState({});
   const form = isFormValid(option, value, initialValue)
-  const { data } = useDataFetcher("weight", null, headers);
+  const { data } = useDataFetcher("/weight");
   const handleSubmit = (event) => {
     event.preventDefault();
     setValue((prevState) => ({
@@ -115,12 +115,12 @@ const Passenger = ({ props }) => {
           id="discount_id"
           className="hover:shadow-md capitalize text-xs outline-none border w-full h-11 rounded-md px-4"
           onChange={handleChange}>
-          <option className="text-xs capitalize pointer-events-none" >{discountOptions[(initialValue?.discount_id || value.data?.discount_id)]?.name || 'Discount' }</option>
+          <option className="text-xs capitalize pointer-events-none" >{discountOptions[(initialValue?.discount_id - 1 || value.data?.discount_id - 1)]?.name || 'Discount' }</option>
           {discountOptions.map((discount, index) => (
             <option key={index} className={`text-xs`} value={discount.value}>
                 {discount.name}
             </option>
-          ) ).sort()}
+          ) )}
         </select>
         <IoIosArrowDown className="absolute right-3 top-1/2 pointer-events-none text-gray-600" />
       </div>
@@ -230,7 +230,7 @@ const Selects = ({ name, value, data, state, setInitialValue, initialValue}) => 
           ...prevState,
           [state]: event.target.value,
         }));
-        console.log(initialValue);
+        // console.log(initialValue);
     };
     return (
       <div className="relative">

@@ -12,7 +12,7 @@ export default function Summary({ value, loading }) {
     return (
         // <div className={`fixed top-20 z-50 right-0 `}>
         <React.Fragment>
-            <IoIosArrowRoundForward className={`absolute top-0 left-0 -translate-x-full select-none cursor-pointer`} size={30}  onClick={(e) => setIsSummaryOpen(!isSummaryOpen)}/>
+            {/* <IoIosArrowRoundForward className={`absolute top-0 left-0 -translate-x-full select-none cursor-pointer`} size={30}  onClick={(e) => setIsSummaryOpen(!isSummaryOpen)}/> */}
             <div className={`relative mx-auto w-[400px] xh-screen p-8 border transition-all rounded-2xl bg-white ${isSummaryOpen ? 'hidden xtranslate-x-full' : 'block xtranslate-x-0' }`}>
                 {loading && <MiniLoader className={`absolute w-full h-full top-0 left-0 bg-white rounded-3xl `}/>  } 
                 <Typography variant="h4" className={``}>

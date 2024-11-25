@@ -7,7 +7,6 @@ import ProtectedRoute from './ProtectedRoute';
 const TripBooking = Loadable(React.lazy(() => import('../pages/TripBooking')));
 const Login = Loadable(React.lazy(() => import('../pages/Login')));
 const Register = Loadable(React.lazy(() => import('../pages/Register')));
-const ViewTicket = Loadable(React.lazy(() => import('../pages/ViewTicket')));
 const BookingComplete = Loadable(React.lazy(() => import('../pages/BookingComplete')));
 // const UserAdd = Loadable(React.lazy(() => import('../layout/pages/users/userAdd')));
 // const UserEdit = Loadable(React.lazy(() => import('../layout/pages/users/userEdit')));

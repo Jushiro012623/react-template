@@ -4,12 +4,12 @@ import ChooseRouteModal from "./ChooseRouteModal";
 import Vessels from "./Vessels";
 import MiniLoader from "@/components/ui/MiniLoader";
 import { IoIosArrowRoundForward } from "react-icons/io";
-import { MultiStepper } from "@/context/MultiStepperProvider";
+import { MultiStepper, useMultiForm } from "@/context/MultiStepperProvider";
 
 const FirstStepOptions = ({props}) => {
     const { data } = props
     const [isOpen, setIsOpen] = React.useState()
-    const { setValue, value, setIsDisable } = React.useContext(MultiStepper)
+    const { setValue, value, setIsDisable } = useMultiForm()
     
     const route = {
         type: value.details.route.type,

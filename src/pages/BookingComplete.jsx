@@ -1,14 +1,12 @@
 import Button from '@/components/ui/Button';
 import Typography from '@/components/ui/Typography';
-import { MultiStepper } from '@/context/MultiStepperProvider';
+import { MultiStepper, useMultiForm } from '@/context/MultiStepperProvider';
 import React from 'react'
 import { FaCheck  } from "react-icons/fa";
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 export default function BookingComplete() {
-    const { state } = React.useContext(MultiStepper);
-    // const navigate = useNavigate();
+    const { state } = useMultiForm()
     if(state.status !== 'complete'){
-        // return navigate('/')
         return <Navigate to="/"/>
     }
     return (

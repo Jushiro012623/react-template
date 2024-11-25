@@ -5,11 +5,11 @@ import { FaUserAlt } from "react-icons/fa";
 import { GiCarWheel, GiCargoCrate } from "react-icons/gi";
 import { PiShippingContainerFill } from "react-icons/pi";
 import FillupInfo from "./FillupInfo";
-import { MultiStepper } from "@/context/MultiStepperProvider";
+import { MultiStepper, useMultiForm } from "@/context/MultiStepperProvider";
 export default function SecondStepOptions({}) {
     
   const [isOpen, setIsOpen] = React.useState();
-  const { value } = React.useContext(MultiStepper);
+  const { value } = useMultiForm()
   const [initialValue, setInitialValue] = React.useState()
     const rideOptions = [
         { id: 1, icon: <FaUserAlt size={35} />, name: "Passenger" },

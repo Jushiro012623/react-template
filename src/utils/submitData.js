@@ -1,4 +1,7 @@
 import axios from "axios";
+import { config } from "dotenv";
+
+const BASE_URL = config.api_url;
 // import dotenv from 'dotenv';
 // dotenv.config()
 /**
@@ -11,23 +14,9 @@ import axios from "axios";
 export const submitData = async (url,data,headers, method = 'POST') => {
     return await axios({
         method,
-        url: `${import.meta.env.VITE_API_URL}/${url}`,
+        url: `${BASE_URL}/${url}`,
         data,
         headers,
     });
 };
 
-// export const submitDataV2 = new Promise((resolve, reject) =>{
-//   axios.post(`${API}/ticket/booking`, data, {
-//     headers: {
-//       "Content-Type": "application/json",
-//       customHeaders
-//     },
-//   })
-//    .then((res) => resolve(res))
-//    .catch((err) => reject(err));
-// })
-// submitDataV2.then(
-//   // function(value) {myDisplayer(value);},
-//   // function(error) {myDisplayer(error);}
-// );

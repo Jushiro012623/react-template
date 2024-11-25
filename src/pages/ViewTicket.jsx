@@ -8,7 +8,7 @@ export default function ViewTicket() {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${token}`,
     }
-    const { data, loading, error } = useDataFetcher('ticket', null, headers)
+    const { data, loading, error } = useDataFetcher('/ticket', null, headers)
     return (
         <React.Fragment>
         {!data ? <div className='min-h-screen w-full flex items-center justify-center'>Loading</div> :
