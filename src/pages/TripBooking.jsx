@@ -46,6 +46,9 @@ export default function TripBooking() {
             })
         }
     }, [value?.data]);
+    if(state.status === 'reset'){
+        return window.location.reload();
+    }
     const handleOnSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
@@ -54,20 +57,20 @@ export default function TripBooking() {
             setLoading(false);
             navigate("complete");
         } catch (err) {
-        console.log("Error", err);
-        setLoading(false);
+            console.error("Error", err);
+            setLoading(false);
         }
     };
     return (
         <React.Fragment>
             <section className="w-full h-screen py-[120px] px-[5%] ">
-                <div className="relative flex p-10 rounded-3xl bg-bg max-w-[1180px] mx-auto  border">
+                <div className="relative flex p-10 rounded-3xl  max-w-[1180px] mx-auto  borderbg-bg">
                 { state.step !== 4 ? ( <Summary value={value} loading={loadingSummary} /> ) : ( "" ) }
                 <div className="mx-auto gap-[96px]">
                     <StepTracker props={{ state, stepDetails, maxStep }} />
                     <form
                         onSubmit={handleOnSubmit}
-                        className={`ticket-form step-body mx-auto mt-24  px-10 pt-10  bg-white rounded-xl border flex flex-col select-none max-w-[652.11px] `}>
+                        className={`ticket-form step-body mx-auto mt-24  px-10 pt-10 h-[550px] bg-white rounded-xl border flex flex-col select-none max-w-[652.11px] shadow-lg`}>
                     {(() => {
                         switch (state.step) {
                         case 1:

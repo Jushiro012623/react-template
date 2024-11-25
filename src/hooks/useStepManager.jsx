@@ -9,6 +9,8 @@ export default function useStepManager(maxStep) {
         return {...state, step: Math.max(state.step - 1, 1),  status: state.status = 'back' ,hide: state.action = 'show-next'};
       case "COMPLETE":
         return {...state,  step: Math.min(state.step + 1, maxStep),  status: state.status = 'complete', hide: state.action = 'hide-all' };
+      case "RESET":
+        return {...state,  status: state.status = 'reset', };
       default:
         return state;
     }

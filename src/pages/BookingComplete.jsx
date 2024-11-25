@@ -1,11 +1,12 @@
 import Button from '@/components/ui/Button';
 import Typography from '@/components/ui/Typography';
 import { MultiStepper, useMultiForm } from '@/context/MultiStepperProvider';
+import useStepManager from '@/hooks/useStepManager';
 import React from 'react'
 import { FaCheck  } from "react-icons/fa";
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 export default function BookingComplete() {
-    const { state } = useMultiForm()
+    const { state, dispatch } = useMultiForm()
     if(state.status !== 'complete'){
         return <Navigate to="/"/>
     }
@@ -19,7 +20,7 @@ export default function BookingComplete() {
                     </div>
                     <Typography variant='h4' className={`!font-bold mt-4`}>Your booking was completed successfully</Typography>
                     <Typography variant='small2' className={`mt-2`}>We've sent a confirmation email with your booking details and tracking information to your inbox.</Typography>
-                    <Link to="/" className='translate-y-full  mt-6'> <Button className={`w-full`}> Go back to dashboard</Button> </Link> 
+                    <Link to="/" className='translate-y-full  mt-6'> <Button className={`w-full`} onClick={()=>{dispatch({ type: "RESET" })}}> Go back to dashboard</Button> </Link> 
                     {/* <Typography variant='info' className={`absolute bottom-0  translate-y-24 mt-5 w-1/2`}>Need help? Contact our support team at <a href="mailto:support@yourwebsite.com">support@yourwebsite.com</a>.</Typography> */}
                 </div>
             </div>
