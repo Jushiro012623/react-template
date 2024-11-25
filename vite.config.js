@@ -6,10 +6,10 @@ import path from "path";
 export default defineConfig({
   plugins: [react()],
   define: {
-    'process.env': {}
+    // 'process.env': import.meta.env
   },
   server: {
-    port: process.env.APP_PORT || 5174
+    port: 5174
   },
   resolve:{
     alias: {
