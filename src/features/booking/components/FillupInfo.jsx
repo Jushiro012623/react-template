@@ -261,7 +261,7 @@ const Selects = ({ name, value, data, state, setInitialValue, initialValue}) => 
     );
   };
   
-const InputValue = ({label, value, setInitialValue, state, type = "text"}) => {
+export const InputValue = ({label, value, setInitialValue, state, type = "text"}) => {
   return <InputWithLabel
   className={`w-full hover:shadow-md focus:shadow-md `}
   type={type}

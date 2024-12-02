@@ -2,14 +2,15 @@ import Typography from "@/components/ui/Typography";
 import { isActive } from "@/utils/tripBookingUtils";
 import React from "react";
 import { FaUserAlt } from "react-icons/fa";
-import { GiCarWheel, GiCargoCrate } from "react-icons/gi";
+import { GiCarWheel } from "react-icons/gi";
 import { PiShippingContainerFill } from "react-icons/pi";
-import FillupInfo from "./FillupInfo";
-import { MultiStepper, useMultiForm } from "@/context/MultiStepperProvider";
+import FillupInfo, { InputValue } from "./FillupInfo";
+import { useMultiForm } from "@/context/MultiStepperProvider";
 export default function SecondStepOptions({}) {
-    
+
   const [isOpen, setIsOpen] = React.useState();
   const { value } = useMultiForm()
+  
   const [initialValue, setInitialValue] = React.useState()
     const rideOptions = [
         { id: 1, icon: <FaUserAlt size={35} />, name: "Passenger" },
@@ -41,6 +42,16 @@ export default function SecondStepOptions({}) {
           </label>
         ))}
       </div>
+        {/* <Typography variant="subheading2" className={`mt-7 mb-1`}>Who's riding with us?</Typography>
+        <Typography variant="info">Please fillup the fields.</Typography> 
+        <div className="flex gap-2 w-full mt-6">
+            <div className="w-full">
+                <InputValue label="Name" value={initialValue?.name} setInitialValue={setInitialValue} state="name" />
+            </div>
+            <div className="w-full">
+                <InputValue label="Email Address" type="email" value={initialValue?.email} setInitialValue={setInitialValue} state="email" />   
+            </div>
+        </div> */}
       <FillupInfo props={{ isOpen, option: initialValue, setIsOpen
       }} />
     </div>

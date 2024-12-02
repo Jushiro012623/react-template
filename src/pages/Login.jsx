@@ -43,7 +43,7 @@ export default function Login() {
         <section className="relative w-full h-screen py-[120px] px-[5%]">
             <form
                 onSubmit={handleSubmit}
-                className=" bg-white shadow-xl absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 flex borderbg-bg rounded-3xl p-10 min-w-[500px] max-w-[500px]  mx-auto flex-col">
+                className=" bg-white shadow-xl absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 flex borderbg-bg rounded-3xl p-10 min-w-[500px]    mx-auto flex-col">
                 <CombinationLogo className={`mx-auto h-8`} />
                 <MiddleInput
                 variant={`${inputError?.email ? "danger" : "default"}`}

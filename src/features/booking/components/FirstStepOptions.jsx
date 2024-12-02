@@ -31,7 +31,7 @@ const FirstStepOptions = ({props}) => {
                 <Vessels props={{data,setValue,value, setIsOpen}}/>
                 <React.Fragment>
                     <Typography variant="subheading2" className={`mt-7 mb-1`}>Choose your route</Typography>
-                    <Typography variant="info">Lorem ipsum dolor sit amet consectetur.</Typography>
+                    <Typography variant="info">We'll bring it to your desired destination.</Typography>
                     <div className={`border h-10 mt-5 rounded-md flex items-center justify-center px-5 mb-3 cursor-pointer hover:shadow-md ${route.id === null ? 'border-gray-200' : 'border-indigo-400 ' }`} onClick={()=>setIsOpen(`${route.id === null  ? 'false' : 'true' }`)} >
                         <Typography variant="small" className={`capitalize`} >
                             {value.details.route.id === null ?  'No Chosen Route' : 
