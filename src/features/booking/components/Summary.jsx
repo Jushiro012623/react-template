@@ -3,10 +3,15 @@ import Typography from "@/components/ui/Typography";
 import { formatToPeso, TRANSACTION_SUMMARY } from "@/utils/tripBookingUtils";
 import React from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
-export default function Summary({ value, loading }) {
-    const {fare ,additionalFee ,discountApplied ,amountOff ,type ,accomodation ,vessel ,totalBeforeDiscount ,discountAmount ,totalAmount } = TRANSACTION_SUMMARY(value)
+export default function Summary({ setValue, value, loading }) {
+    const {fare ,additionalFee ,discountApplied ,type ,accomodation ,vessel ,totalBeforeDiscount ,discountAmount ,totalAmount } = TRANSACTION_SUMMARY(value)
 
-    
+    // React.useEffect(()=>{
+    //     setValue((prevState) => ({
+    //         ...prevState,
+    //         total_amount: totalAmount,
+    //     }));
+    // },[totalAmount])
     const [isSummaryOpen, setIsSummaryOpen] = React.useState();
 
     return (

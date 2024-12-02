@@ -12,6 +12,7 @@ const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(cookies._accessToken);
     
     const memoizedToken = React.useMemo(() => token, [token]);
+    
     const login = (response) => {
         setToken(response.access_token)
         setCookie("_accessToken", response.access_token, { path: '/'})

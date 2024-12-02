@@ -1,9 +1,9 @@
 import React from "react";
-import logo from "@/assets/logo.svg";
+import logo from "/logo.svg";
 export function CombinationLogo({className = 'h-6 '}) {
   return (
     <div className={`flex items-center ${className}`}>
-        <img src={logo} className={`h-full w-full`} alt="logo" />
+        <img src={logo} className={`h-full`} alt="logo" />
     </div>
   );
 }

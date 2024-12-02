@@ -3,7 +3,7 @@ import { FaArrowLeftLong,FaArrowRightLong  } from "react-icons/fa6";
 import Button from '../../../components/ui/Button';
 
 export default function StepController({ props }) {
-    const {state, dispatch, maxStep, isDisable} = props
+    const {state, dispatch, maxStep, isDisable, loading} = props
     // console.log(state);
     return (
         <div className={`step-buttons flex w-full border-t border-dashed mt-auto py-8 ${state.step === 1 ? 'justify-end' : 'justify-between'}`}>
@@ -27,7 +27,7 @@ export default function StepController({ props }) {
                     }
                 }}  
             >
-                {state.step === maxStep ? <>Complete<FaArrowRightLong /></> : <>Next<FaArrowRightLong /></>}
+                {state.step === maxStep ? (loading ? <>Please Wait...</> : <>Complete<FaArrowRightLong /></>) : <>Next<FaArrowRightLong /></>}
             </Button>
         </div>
     )

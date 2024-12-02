@@ -9,7 +9,10 @@ import React from 'react'
 import { AiOutlineLoading } from 'react-icons/ai'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import loginBG from '../assets/login-bg.svg'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 export default function Register() {
+    
+    useDocumentTitle("GT | Register");
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState(null);
     const navigate = useNavigate()

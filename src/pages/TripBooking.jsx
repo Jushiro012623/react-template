@@ -15,22 +15,27 @@ import Summary from "@/features/booking/components/Summary";
 import { useMultiForm } from "@/context/MultiStepperProvider";
 import api from "@/api/api";
 import { useAuth } from "@/context/AuthProvider";
+import Footer from '@/components/Footer';
+import Login from "./Login";
 
 export default function TripBooking() {
-    useDocumentTitle("Ticket Booking");
+    useDocumentTitle("Cargo Booking");
     const { stepDetails,setValue, value, dispatch, state, isDisable, maxStep} = useMultiForm()
     const { data: vessels, loading: vesselsLoading, error: vesselsError } = useDataFetcher("/vessel")
     const navigate = useNavigate()
     const [loading, setLoading] = React.useState(false)
     const [loadingSummary, setLoadingSummary] = React.useState(false);
     const {token} = useAuth()
+    console.log(value);
+    
     React.useEffect(() => {
         if (value?.discount) {
             const payload = {
                 discount_id: parseInt(value.data?.discount_id),
                 type_id: value.data?.type_id,
                 route_id: value.data?.route_id,
-                weight_id: value.data?.weight_id || {}
+                weight_id: value.data?.weight_id || {},
+                additional: value.data?.additional
                 }
             api.post("/fare/transactionFare", payload, token)
             .then((res)=>{
@@ -53,7 +58,7 @@ export default function TripBooking() {
         event.preventDefault();
         setLoading(true);
         try {
-            await api.post("/ticket", {...value.data, fare_id : value.discount.data?.fare?.id}, token);
+            await api.post("/ticket", {...value.data, fare_id : value.discount.data?.fare?.id, payment: value.discount.data, total_amount: value.total_amount}, token);
             setLoading(false);
             navigate("complete");
         } catch (err) {
@@ -65,7 +70,7 @@ export default function TripBooking() {
         <React.Fragment>
             <section className="w-full h-screen py-[120px] px-[5%] ">
                 <div className="relative flex p-10 rounded-3xl  max-w-[1180px] mx-auto  borderbg-bg">
-                { state.step !== 4 ? ( <Summary value={value} loading={loadingSummary} /> ) : ( "" ) }
+                { state.step !== 4 ? ( <Summary setValue={setValue} value={value} loading={loadingSummary} /> ) : ( "" ) }
                 <div className="mx-auto gap-[96px]">
                     <StepTracker props={{ state, stepDetails, maxStep }} />
                     <form
@@ -83,12 +88,13 @@ export default function TripBooking() {
                             return <p>Default</p>;
                         }
                     })()}
-                    <StepController props={{ dispatch, state, maxStep, isDisable }} />
+                    <StepController props={{ dispatch, state, maxStep, isDisable, loading }} />
                     </form>
                 </div>
-                {loading && <MiniLoader className={`absolute w-full h-full top-0 left-0 bg-slate-900/40 rounded-3xl `}/>}
+                {/* {loading && <MiniLoader className={`absolute w-full h-full top-0 left-0 bg-slate-900/40 rounded-3xl `}/>} */}
                 </div>
             </section>
+            <Footer />
         </React.Fragment>
     );
 }

@@ -57,15 +57,19 @@ export const VALUE_FORMAT = {
     },
 }
 export const TRANSACTION_SUMMARY = (value) => {
-    const   fare = parseFloat(value.discount?.data?.fare?.fare) || 0.00, 
-            additionalFee = parseFloat(value.discount?.data?.fare?.additional_fee) || 0.00, 
-            discountApplied = value.discount?.data?.discount?.name || 'REGULAR', 
-            amountOff = parseFloat(value.discount?.data?.discount?.percentage) || 0.00, 
-            type = value.data.type_id === 1 ? 'Passenger' : (value.data.type_id === 2 ? 'Rolling Cargo' : (value.data.type_id === 3 ? 'Drop Cargo' : 'N/a')), 
-            accomodation = value.data?.additional && value.data?.type_id === 1 ? (value.data?.additional == 1 ? 'AIRCONDITIONED' : 'BASIC') : "n/a", 
+    const fares = value.discount?.data;
+    const calculated_amounts = fares?.calculated_amount;
+    const types = value.data.type_id;
+
+    const   fare = parseFloat(fares?.fare?.fare) || 0.00, 
+            additionalFee = parseFloat(fares?.fare?.additional_fee) || 0.00, 
+            discountApplied = fares?.discount?.name || 'REGULAR', 
+            type = types === 1 ? 'Passenger' : (types === 2 ? 'Rolling Cargo' : (types === 3 ? 'Drop Cargo' : 'N/a')), 
+            accomodation = fares?.fare?.additional_fee == true ? 'AIRCONDITIONED' : 'BASIC' ||  "n/a", 
             vessel = value.details.vessel_name ? value.details.vessel_name : "n/a", 
-            totalBeforeDiscount = fare + additionalFee, 
-            discountAmount = totalBeforeDiscount * amountOff, 
-            totalAmount = (totalBeforeDiscount - discountAmount) + amountOff
-    return { fare , additionalFee , discountApplied , amountOff , type , accomodation , vessel , totalBeforeDiscount , discountAmount , totalAmount }
+            totalBeforeDiscount = parseFloat(calculated_amounts.total_amount) || 0.00,//fare + additionalFee, 
+            discountAmount = parseFloat(calculated_amounts.discounted_amount) || 0.00, 
+            totalAmount = parseFloat(calculated_amounts.grand_total) || 0.00;
+
+    return { fare , additionalFee , discountApplied , type , accomodation , vessel , totalBeforeDiscount , discountAmount , totalAmount }
 }
