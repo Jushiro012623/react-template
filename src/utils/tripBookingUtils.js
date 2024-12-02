@@ -67,9 +67,9 @@ export const TRANSACTION_SUMMARY = (value) => {
             type = types === 1 ? 'Passenger' : (types === 2 ? 'Rolling Cargo' : (types === 3 ? 'Drop Cargo' : 'N/a')), 
             accomodation = fares?.fare?.additional_fee == true ? 'AIRCONDITIONED' : 'BASIC' ||  "n/a", 
             vessel = value.details.vessel_name ? value.details.vessel_name : "n/a", 
-            totalBeforeDiscount = parseFloat(calculated_amounts.total_amount) || 0.00,//fare + additionalFee, 
-            discountAmount = parseFloat(calculated_amounts.discounted_amount) || 0.00, 
-            totalAmount = parseFloat(calculated_amounts.grand_total) || 0.00;
+            totalBeforeDiscount = parseFloat(calculated_amounts?.total_amount) || 0.00,//fare + additionalFee, 
+            discountAmount = parseFloat(calculated_amounts?.discounted_amount) || 0.00, 
+            totalAmount = parseFloat(calculated_amounts?.grand_total) || 0.00;
 
     return { fare , additionalFee , discountApplied , type , accomodation , vessel , totalBeforeDiscount , discountAmount , totalAmount }
 }

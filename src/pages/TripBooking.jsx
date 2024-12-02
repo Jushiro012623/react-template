@@ -30,25 +30,28 @@ export default function TripBooking() {
     
     React.useEffect(() => {
         if (value?.discount) {
+            const request = value.data
             const payload = {
-                discount_id: parseInt(value.data?.discount_id),
-                type_id: value.data?.type_id,
-                route_id: value.data?.route_id,
-                weight_id: value.data?.weight_id || {},
-                additional: value.data?.additional
+                discount_id: parseInt(request?.discount_id),
+                type_id: request?.type_id,
+                route_id: request?.route_id,
+                weight_id: request?.weight_id || {},
+                additional: request?.additional
                 }
-            api.post("/fare/transactionFare", payload, token)
-            .then((res)=>{
-                setValue((prevState) => ({
-                    ...prevState,
-                    discount: res.data,
-                }));})
-            .catch((err) => {
-                console.error(err);
-            })
-            .finally(() => {
-                setLoadingSummary(false);
-            })
+            const fareRequest = async () => {
+                try{
+                    const res = await api.post("/fare/transactionFare", payload, token)
+                    setValue((prevState) => ({
+                        ...prevState,
+                        discount: res.data,
+                    }));
+                }catch(err){
+                    console.error(err);
+                }finally{
+                    setLoadingSummary(false);
+                }
+            }
+            fareRequest();
         }
     }, [value?.data]);
     if(state.status === 'reset'){
@@ -75,7 +78,7 @@ export default function TripBooking() {
                     <StepTracker props={{ state, stepDetails, maxStep }} />
                     <form
                         onSubmit={handleOnSubmit}
-                        className={`ticket-form step-body mx-auto mt-24  px-10 pt-10 h-[550px] bg-white rounded-xl border flex flex-col select-none max-w-[652.11px] shadow-lg`}>
+                        className={`ticket-form step-body mx-auto mt-24  px-10 pt-10  bg-white rounded-xl border flex flex-col select-none max-w-[652.11px] shadow-lg`}>
                     {(() => {
                         switch (state.step) {
                         case 1:
