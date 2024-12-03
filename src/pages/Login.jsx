@@ -38,9 +38,9 @@ export default function Login() {
   return (
     <React.Fragment>
         {/* <img src={loginBG} className="fixed  w-screen top-0 left-0 opacity-30"/> */}
-        <section className="relative w-full h-screen py-[120px] px-[5%]">
+        <section className="relative w-full h-screen py-[120px] px-[5%] place-content-center place-items-center">
             {/* <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 flex gap-5  items-center justify-center"> */}
-                <form className="absolute top-1/2 -translate-y-1/2 left-96 bg-white shadow-xl flex border  rounded-3xl px-10 py-14 min-w-[500px] mx-auto flex-col z-10"
+                <form className="bg-white shadow-xl flex border  rounded-3xl px-10 py-14 max-w-[500px] mx-auto flex-col z-10"
                     onSubmit={handleSubmit} >
                     <CombinationLogo className={`mx-auto h-8`} />
                     <MiddleInput
@@ -91,7 +91,7 @@ export default function Login() {
                     Create Account
                     </Link>
                 </form>
-                <img src={loginSVG} alt="" className="absolute top-1/2 -translate-y-1/2 left-1/2 w-[850px] -translate-x-10"/>
+                {/* <img src={loginSVG} alt="" className="absolute top-1/2 -translate-y-1/2 left-1/2 w-[850px] -translate-x-10"/> */}
             {/* </div> */}
         </section>
     </React.Fragment>

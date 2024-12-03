@@ -11,7 +11,7 @@ export default function BookingComplete() {
     const { state, dispatch } = useMultiForm()
     
     useDocumentTitle("Booking | Complete");
-    if(state.status !== 'complete'){
+    if(state.status !== 'done'){
         return <Navigate to="/"/>
     }
     return (

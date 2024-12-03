@@ -20,36 +20,28 @@ export default function ThirdStep() {
         <InputReview value={user.email || ''  } label={'Email'} />
         <Typography variant='small1' color='primary' className={` col-span-3 mt-2 uppercase`}>Booking Details</Typography>
         <span className="block h-[2px] border-dotted w-full border-b-2 border-gray-300 col-span-4"></span>
-        {(() => {
-            switch (value.data?.type_id) {
-              case 1:
-                return (
-                  <React.Fragment>
-                    <InputReview value={value.data?.additional === "true" ? 'AIRCONDITIONED' : 'BASIC'} label={'Additional Fee'} />
-                    <InputReview value={value.discount?.data?.discount?.name} label={'Discount'} />
-                  </React.Fragment>
-                );
-              case 2:
-                return (
-                  <React.Fragment>
-                    <InputReview value={value.data?.vehicle_type} label={'Vehicle Type'} />
-                    <InputReview value={value.data?.plate_number} label={'Plate Number'} />
-                    <InputReview value={value.data?.weight_id} label={'Weight/KG'} />
-                  </React.Fragment>
-                );
-              case 3:
-                return (
-                  <React.Fragment>
-                    <InputReview value={value.data?.item_name} label={'Item Name'} />
-                    <InputReview value={value.data?.quantity} label={'Quantityr'} />
-                    <InputReview value={value.data?.cargo_description} label={'Cargo Description'} />
-                    <InputReview value={value.data?.weight_id} label={'Weight/KG'} />
-                  </React.Fragment>
-                );
-              default:
-                return <Typography variant="h2">Invalid Option</Typography>;
-            }
-          })()}
+        {value.data?.type_id === 1 && 
+            <React.Fragment>
+                <InputReview value={value.data?.additional === "true" ? 'AIRCONDITIONED' : 'BASIC'} label={'Additional Fee'} />
+                <InputReview value={value.discount?.data?.discount?.name} label={'Discount'} />
+            </React.Fragment>
+        }
+        {value.data?.type_id === 2 && 
+            <React.Fragment>
+                <InputReview value={value.data?.vehicle_type} label={'Vehicle Type'} />
+                <InputReview value={value.data?.plate_number} label={'Plate Number'} />
+                <InputReview value={value.data?.weight_id} label={'Weight/KG'} />
+          </React.Fragment>
+        }
+        {value.data?.type_id === 3 && 
+            <React.Fragment>
+                <InputReview value={value.data?.item_name} label={'Item Name'} />
+                <InputReview value={value.data?.quantity} label={'Quantityr'} />
+                <InputReview value={value.data?.cargo_description} label={'Cargo Description'} />
+                <InputReview value={value.data?.weight_id} label={'Weight/KG'} />
+          </React.Fragment>
+        }
+
       </div>
       </div>
     </React.Fragment>

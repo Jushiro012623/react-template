@@ -73,3 +73,26 @@ export const TRANSACTION_SUMMARY = (value) => {
 
     return { fare , additionalFee , discountApplied , type , accomodation , vessel , totalBeforeDiscount , discountAmount , totalAmount }
 }
+// export const FORM_SESSION = () => {
+//     if(state.status === 'done'){
+//         return <Navigate to="complete"/>
+//     }else if(state.status === 'reset'){
+//         return window.location.reload();
+//     }
+// }
+export const FORM_DATA_SANITIZATION = (value) =>{
+        let formData ;
+        if(value.data.type_id == 1){
+            const { plate_number, vehicle_type, weight_id, quantity, item_name,cargo_description, ...data } = value.data;
+            formData = {...data}
+        }else if(value.data.type_id == 2){
+            const { additional, discount_id, quantity, item_name,cargo_description, ...data } = value.data;
+            formData = {...data}
+        }else if(value.data.type_id == 3){
+            const { additional, discount_id, plate_number, vehicle_type, ...data } = value.data;
+            formData = {...data}
+        }else{
+            formData = value.data
+        }
+        return formData;
+}

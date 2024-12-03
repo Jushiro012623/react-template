@@ -42,24 +42,9 @@ export default function FillupInfo({ props }) {
               }}>
               <RxCross2 size={20} />
             </button>
-            {(() => {
-              switch (option) {
-                case 1:
-                  return (
-                    <Passenger props={{ initialValue, setInitialValue, value }} />
-                  );
-                case 2:
-                  return (
-                    <RollingCargo props={{ initialValue, setInitialValue, value, data }} />
-                  );
-                case 3:
-                  return (
-                    <DropCargo props={{ initialValue, setInitialValue, value,data }} />
-                  );
-                default:
-                  return <Typography variant="h2">Invalid Option</Typography>;
-              }
-            })()}
+            {option === 1 && <Passenger props={{ initialValue, setInitialValue, value }} />}
+            {option === 2 && <RollingCargo props={{ initialValue, setInitialValue, value, data }} />}
+            {option === 3 && <DropCargo props={{ initialValue, setInitialValue, value,data }} />}
             <div className="mt-5 border-t-2 border-dotted pt-5">
               <Button
                 type="button"
@@ -100,8 +85,8 @@ const Passenger = ({ props }) => {
       { name: 'Minor', value: 4},
     { name: 'Student', value: 5},
   ], addOnsOptions = [
-    {name: 'Basic', value: 2},
-    {name: 'Airconditioned', value: 1},
+    {name: 'Basic', value: 1},
+    {name: 'Airconditioned', value: 2},
   ]
   return (
     <React.Fragment>

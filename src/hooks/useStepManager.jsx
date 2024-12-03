@@ -4,13 +4,15 @@ export default function useStepManager(maxStep) {
   const reducer = (state, action) => {
     switch (action.type) {
       case "NEXT":
-        return { ...state, step: state.step + 1, status: state.status = 'next' , hide: state.action = 'hide-next'};
+        return { ...state, step: state.step + 1, status: state.status = 'next'};
       case "BACK":
-        return {...state, step: Math.max(state.step - 1, 1),  status: state.status = 'back' ,hide: state.action = 'show-next'};
+        return {...state, step: Math.max(state.step - 1, 1),  status: state.status = 'back'};
       case "COMPLETE":
-        return {...state,  step: Math.min(state.step + 1, maxStep),  status: state.status = 'complete', hide: state.action = 'hide-all' };
+        return {...state,  step: Math.min(state.step + 1, maxStep),  status: state.status = 'complete'};
       case "RESET":
         return {...state,  status: state.status = 'reset', };
+      case "DONE":
+        return {...state,  status: state.status = 'done', };
       default:
         return state;
     }
